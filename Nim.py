@@ -10,16 +10,18 @@ preperiod = ()      # the preperiod is usually labelled 'R'
 moves = []
 
 def Nim():
+    global dimensions
     setup()
     current_tuple = origen
     current_dimension = 0
 
-    dimension_hold = False
-    while(not dimension_hold):
+    while(current_dimension < dimensions):
         current_tuple = incrementTuple(current_tuple, current_dimension)
         evaluateTuple(current_tuple)
-        dimension_hold = True
-
+        if periodHolds():
+            current_dimension += 1
+        else:
+            updatePeriod()
 
 def addTuples(x,y):
     newTuple = ()
@@ -59,6 +61,18 @@ def offthegrid(t):
                 neg = True
         return neg
 
+def periodHolds(current_dimension):
+    global outcomes, period, preperiod, outcomes, dimensions
+    cur_position = preperiod
+    indexer = fillTuples((),0, current_dimension) + period[current_dimension]
+    indexer = fillTuples(indexer)
+    while(addTuples(cur_position, indexer) in outcomes):
+        if outcomes[cur_position] !== outcomes[addTuples(cur_position, indexer)]:
+            return false
+        cur_position = addTuples(cur_position, indexer)
+
+
+
 def setNimMovesold():
     moves = []
     moves.append(fillTuple((-1,)))
@@ -68,18 +82,19 @@ def setNimMovesold():
         moves.append(fillTuple(newtuple))
 
 def setNimMoves():
+    moves = []
     moves.append(fillTuple((-1,),0,dimensions))
     for i in range(dimensions ):
         for j in range(i+1, dimensions ):
             t = fillTuple((),0,i)
             inner = (1,) + fillTuple((),0,j-i-1) + (-1,)
-            print(t, inner)
             t += inner
-            print("\t", t)
             moves.append(fillTuple(t,0,dimensions))
+    return moves
 
 
 def setup():
+    global moves
     origen = fillTuple(())
     if origen_value_is_P:
         outcomes[origen] = 'P'
@@ -87,4 +102,5 @@ def setup():
         outcomes[origen] = 'N'
 
     preperiod = fillTuple((),1)
-    setNimMoves()
+    moves = setNimMoves()
+    moves.append(1)
