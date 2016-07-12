@@ -59,12 +59,25 @@ def offthegrid(t):
                 neg = True
         return neg
 
-def setNimMoves():
+def setNimMovesold():
+    moves = []
     moves.append(fillTuple((-1,)))
     for idx in range(dimensions -1):
         newtuple = fillTuple((),0, idx)
         newtuple += (1,-1)
         moves.append(fillTuple(newtuple))
+
+def setNimMoves():
+    moves.append(fillTuple((-1,),0,dimensions))
+    for i in range(dimensions ):
+        for j in range(i+1, dimensions ):
+            t = fillTuple((),0,i)
+            inner = (1,) + fillTuple((),0,j-i-1) + (-1,)
+            print(t, inner)
+            t += inner
+            print("\t", t)
+            moves.append(fillTuple(t,0,dimensions))
+
 
 def setup():
     origen = fillTuple(())
