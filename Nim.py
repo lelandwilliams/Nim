@@ -67,11 +67,9 @@ def periodHolds(current_dimension):
     indexer = fillTuples((),0, current_dimension) + period[current_dimension]
     indexer = fillTuples(indexer)
     while(addTuples(cur_position, indexer) in outcomes):
-        if outcomes[cur_position] !== outcomes[addTuples(cur_position, indexer)]:
+        if outcomes[cur_position] != outcomes[addTuples(cur_position, indexer)]:
             return false
         cur_position = addTuples(cur_position, indexer)
-
-
 
 def setNimMovesold():
     moves = []
