@@ -24,6 +24,10 @@ def Nim():
             updatePeriod()
 
 def addTuples(x,y):
+    #
+    # this function returns a new tuple constructed
+    # by component-wise addition from the two input tuples
+    #
     newTuple = ()
     for idx in range(len(x)):
         newTuple += (x[idx] + y[idx]),
