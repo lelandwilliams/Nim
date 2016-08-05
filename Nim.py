@@ -13,37 +13,43 @@ class Nim:
     # The moves list is populated by various setMoves functions. By default it is set
     # to setStandardMoves().
 
-        self.dimensions = 3 # The maximum number of dimensions to consider
+        self.dimensions = 1 # The maximum number of dimensions to consider
         self.origen = () # The 0 vector
         self.period = () # The current quotiant
         self.preperiod = () # The lowest position in each dimension for which
                             # the period holds
-        self.moves = [] # A list of the moves, according to the rules
         self.outcomes = {}  # a dictionary (key-value pair) of positions and their outcomes
                             # outcomes are either 'N' or 'P'
-        self.current_dimension = 0
         self.rectangle = () # The shape of the rectangle needed to work out the period
+
+        self.setDimensions(3) # sets above parameters to 3 dimensional objects
+        self.moves = self.setStandardMoves() # A list of the moves, according to the rules
         self.origen_value_is_P = True
+        self.setNormalPlay()    
+
         self.print_report_when_done = True
 
         if run:
             self.run()
 
     def run(self):
-        self.setup()
         if self.print_report_when_done:
             print(report())
 
-    def setup(self):
-        self.origen = self.fillTuple()
+    def setDimensions(self,dimensions):
+        self.dimensions = 3
+        self.origen = self.fillTuple(())
         self.period = self.fillTuple((),1)
         self.preperiod = self.origen
         self.rectangle = self.period
 
-        if self.origen_value_is_P:
-            self.outcomes[self.origen] = 'P'
-        else:
-            self.outcomes[self.origen] = 'N'
+    def setNormalPlay(self):
+        self.origen_value_is_P = True
+        self.outcomes[self.origen] = 'P'
+
+    def setMiserePlay(self):
+        self.origen_value_is_P = False
+        self.outcomes[self.origen] = 'N'
 
     def evaluateTuple(self,t):
         if t not in self.outcomes:
@@ -74,18 +80,20 @@ class Nim:
         # this function returns a new tuple constructed
         # by component-wise addition from the two input tuples
         #
-        return [i+j for i,j in zip(t1,t2)]
+        return tuple([i+j for i,j in zip(t1,t2)])
 
     def decrementTuple(self,t, pos = 0):
         # this function takes in a tuple and a dimension,
         # and returns the tuple but with the value in the given
         # position decremented by 1.
-        indexTuple = fillTuple( (), 0, pos ) + (1,)
-        return addTuples(t, fillTuple(indexTuple))
+        indexTuple = self.fillTuple( (), 0, pos ) + (-1,)
+        return self.addTuples(t, self.fillTuple(indexTuple))
 
     def fillTuple(self, t, fill=0, d = None):
         if d == None:
             d = self.dimensions
+        if d == 0:
+            return ()
         while len(t) < d:
             t += fill,
         return t
@@ -94,8 +102,8 @@ class Nim:
         # this function takes in a tuple and a dimension,
         # and returns the tuple but with the value in the given
         # position incremented by 1.
-        indexTuple = fillTuple( (), 0, pos ) + (1,)
-        return addTuples(t, fillTuple(indexTuple))
+        indexTuple = self.fillTuple( (), 0, pos ) + (1,)
+        return self.addTuples(t, self.fillTuple(indexTuple))
 
     def periodHolds(self,current_dimension):
         global outcomes, period, preperiod, outcomes, dimensions
@@ -108,10 +116,11 @@ class Nim:
             cur_position = addTuples(cur_position, indexer)
 
     def setStandardMoves(self):
-        self.moves = []
-        for i in range(dimensions ):
-            base_tuple = self.decrementTuple( (), i)
-            self.moves.append(base_tuple)
+        moves = []
+        for i in range(self.dimensions ):
+            base_tuple = self.decrementTuple( self.fillTuple(()) , i)
+            moves.append(base_tuple)
             for j in range(i):
-                self.moves.append(incrementTuple(base_tuple,j))
+                moves.append(self.incrementTuple(base_tuple,j))
+        return moves
 
