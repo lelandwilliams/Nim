@@ -1,7 +1,7 @@
 
 
 class Nim:
-    def __init__(self, run = False)
+    def __init__(self, run = False):
     # The __init__ function is automatically run when an instance of the 
     # class is created.
     # The parameter run indicates whether the class should run with the 
@@ -11,7 +11,7 @@ class Nim:
     # which automatically creates them according to the given dimension
     #
     # The moves list is populated by various setMoves functions. By default it is set
-    # to standardMoves().
+    # to setStandardMoves().
 
         self.dimensions = 3 # The maximum number of dimensions to consider
         self.origen = () # The 0 vector
@@ -27,32 +27,25 @@ class Nim:
         self.print_report_when_done = True
 
         if run:
-            self.mainLoop()
+            self.run()
 
-        while(current_dimension < dimensions):
-            current_tuple = incrementTuple(current_tuple, current_dimension)
-            evaluateTuple(current_tuple)
-            if periodHolds():
-                current_dimension += 1
-            else:
-                updatePeriod()
-
-    def mainLoop():
+    def run(self):
         self.setup()
         if self.print_report_when_done:
             print(report())
 
-    def addTuples(x,y):
-        #
-        # this function returns a new tuple constructed
-        # by component-wise addition from the two input tuples
-        #
-        newTuple = ()
-        for idx in range(len(x)):
-            newTuple += (x[idx] + y[idx]),
-        return newTuple
+    def setup(self):
+        self.origen = self.fillTuple()
+        self.period = self.fillTuple((),1)
+        self.preperiod = self.origen
+        self.rectangle = self.period
 
-    def evaluateTuple(t):
+        if self.origen_value_is_P:
+            self.outcomes[self.origen] = 'P'
+        else:
+            self.outcomes[self.origen] = 'N'
+
+    def evaluateTuple(self,t):
         if t not in self.outcomes:
             if self.offthegrid(t):
                 if not self.origen_value_is_P:
@@ -65,24 +58,46 @@ class Nim:
                     if self.evaluateTuple(addTuples(t,move)) == 'P':
                         self.outcomes[t] = 'P'
                         break
-
-    def fillTuple(t, fill=0, d = dimensions):
-        while len(t) < d:
-            t += fill,
-        return t
-
-    def incrementTuple(t, dim = 0):
-        indexTuple = fillTuple( (), 0, dim ) + (1,)
-        return addTuples(t, fillTuple(indexTuple))
-
-    def offthegrid(t):
+    def offthegrid(self,t):
             neg = False
             for idx in range(len(t)):
                 if t[idx] == -1:
                     neg = True
             return neg
 
-    def periodHolds(current_dimension):
+    #
+    # Tuple manipulation functions
+    #
+
+    def addTuples(self,t1,t2):
+        #
+        # this function returns a new tuple constructed
+        # by component-wise addition from the two input tuples
+        #
+        return [i+j for i,j in zip(t1,t2)]
+
+    def decrementTuple(self,t, pos = 0):
+        # this function takes in a tuple and a dimension,
+        # and returns the tuple but with the value in the given
+        # position decremented by 1.
+        indexTuple = fillTuple( (), 0, pos ) + (1,)
+        return addTuples(t, fillTuple(indexTuple))
+
+    def fillTuple(self, t, fill=0, d = None):
+        if d == None:
+            d = self.dimensions
+        while len(t) < d:
+            t += fill,
+        return t
+
+    def incrementTuple(self,t, pos = 0):
+        # this function takes in a tuple and a dimension,
+        # and returns the tuple but with the value in the given
+        # position incremented by 1.
+        indexTuple = fillTuple( (), 0, pos ) + (1,)
+        return addTuples(t, fillTuple(indexTuple))
+
+    def periodHolds(self,current_dimension):
         global outcomes, period, preperiod, outcomes, dimensions
         cur_position = preperiod
         indexer = fillTuples((),0, current_dimension) + period[current_dimension]
@@ -92,34 +107,11 @@ class Nim:
                 return false
             cur_position = addTuples(cur_position, indexer)
 
-    def setNimMovesold():
-        moves = []
-        moves.append(fillTuple((-1,)))
-        for idx in range(dimensions -1):
-            newtuple = fillTuple((),0, idx)
-            newtuple += (1,-1)
-            moves.append(fillTuple(newtuple))
-
-    def setNimMoves():
-        moves = []
-        moves.append(fillTuple((-1,),0,dimensions))
+    def setStandardMoves(self):
+        self.moves = []
         for i in range(dimensions ):
-            for j in range(i+1, dimensions ):
-                t = fillTuple((),0,i)
-                inner = (1,) + fillTuple((),0,j-i-1) + (-1,)
-                t += inner
-                moves.append(fillTuple(t,0,dimensions))
-        return moves
+            base_tuple = self.decrementTuple( (), i)
+            self.moves.append(base_tuple)
+            for j in range(i):
+                self.moves.append(incrementTuple(base_tuple,j))
 
-
-    def setup():
-        global moves
-        origen = fillTuple(())
-        if origen_value_is_P:
-            outcomes[origen] = 'P'
-        else:
-            outcomes[origen] = 'N'
-
-        preperiod = fillTuple((),1)
-        moves = setNimMoves()
-        moves.append(1)
