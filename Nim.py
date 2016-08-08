@@ -36,12 +36,22 @@ class Nim:
         if self.print_report_when_done:
             print(report())
 
+    #
+    # below are setter functions
+    #
+
     def setDimensions(self,dimensions):
-        self.dimensions = 3
+        self.dimensions = dimensions
         self.origen = self.fillTuple(())
         self.period = self.fillTuple((),1)
         self.preperiod = self.origen
         self.rectangle = self.period
+        self.moves = self.setStandardMoves()
+        self.outcomes = {}
+        if self.origen_value_is_P:
+            setNormalPlay()
+        else:
+            setMiserePlay()
 
     def setNormalPlay(self):
         self.origen_value_is_P = True
@@ -51,7 +61,18 @@ class Nim:
         self.origen_value_is_P = False
         self.outcomes[self.origen] = 'N'
 
+    def setStandardMoves(self):
+        moves = []
+        for i in range(self.dimensions ):
+            base_tuple = self.decrementTuple( self.fillTuple(()) , i)
+            moves.append(base_tuple)
+            for j in range(i):
+                moves.append(self.incrementTuple(base_tuple,j))
+        return moves
+
     def evaluateTuple(self,t):
+        if t in self.outcomes:
+            return outcomes[t]
         if t not in self.outcomes:
             if self.offthegrid(t):
                 if not self.origen_value_is_P:
@@ -64,12 +85,16 @@ class Nim:
                     if self.evaluateTuple(addTuples(t,move)) == 'P':
                         self.outcomes[t] = 'P'
                         break
+
     def offthegrid(self,t):
-            neg = False
+        #
+        # if a given tuple contains a negative scalar
+        # return True, else return False
+        #
             for idx in range(len(t)):
                 if t[idx] == -1:
-                    neg = True
-            return neg
+                    return True
+            return False
 
     #
     # Tuple manipulation functions
@@ -114,13 +139,4 @@ class Nim:
             if outcomes[cur_position] != outcomes[addTuples(cur_position, indexer)]:
                 return false
             cur_position = addTuples(cur_position, indexer)
-
-    def setStandardMoves(self):
-        moves = []
-        for i in range(self.dimensions ):
-            base_tuple = self.decrementTuple( self.fillTuple(()) , i)
-            moves.append(base_tuple)
-            for j in range(i):
-                moves.append(self.incrementTuple(base_tuple,j))
-        return moves
 
