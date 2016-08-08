@@ -23,37 +23,104 @@ class Nim:
                             # outcomes are either 'N' or 'P'
         self.rectangle = () # The shape of the rectangle needed to work out the period
 
-        self.setNormalPlay()    
         self.setDimensions(3) # sets above parameters to 3 dimensional objects
         self.moves = self.setStandardMoves() # A list of the moves, according to the rules
+        self.setNormalPlay()    
 
         self.print_report_when_done = True
 
         if run:
             self.run()
     
-    def __repr__(self:
+    def run(self):
+        # 
+        # This function is the main loop of the program
+        #
+        done = False
+        while not done:
+            self.fillRectangle()
+        if self.print_report_when_done:
+            print(report())
+
+    def fillRectangle():
+        t = self.incrementTuple(self.origen,0))
+        done = False
+        while not done:
+            while t[0] < self.rectangle[0]:
+                self.evaluateTuple(t)
+                t = self.incrementTuple(t,0)
+            carry = True
+            carry_dimension = 1
+            while carry:
+                t = self.fillTuple((), 0, carry_dimension -1) + t[carry_dimension:]
+                if t[carry_dimension] < self.rectangle[carry_dimension]:
+                    carry = False
+                else:
+                    carry_dimension += 1
+                    if carry_dimension == self.dimensions:
+                        carry = False
+                        done = True
+
+
+
+    
+    
+    def evaluateTuple(self,t):
+        #
+        # Input: a tuple
+        # Outpus: 'P' or 'N'
+        #
+        # This function also stores the P/N value in the outcomes dictionary
+        # when it is first discovered, except when a tuple has a negative scalar,
+        # in which case it simply returns 'N'
+        #
+
+        if t in self.outcomes:
+            return outcomes[t]
+        if t not in self.outcomes:
+            if self.offthegrid(t):
+                return 'N'
+            else:
+                self.outcomes[t] = 'N'
+                for move in moves:
+                    if self.evaluateTuple(addTuples(t,move)) == 'P':
+                        self.outcomes[t] = 'P'
+                        break
+                return self.outcomes[t]
+
+    def offthegrid(self,t):
+        #
+        # if a given tuple contains a negative scalar
+        # return True, else return False
+        #
+            for idx in range(len(t)):
+                if t[idx] == -1:
+                    return True
+            return False
+#
+    # The following are functions to create report strings
+    #
+
+    def __repr__(self):
             return self.report()
 
     def report(self):
-        return slef.report_parameters()
+        return self.report_parameters()
 
     def report_parameters(self):
         #
         # This Function returns a string that lists the values of the parameters line by line
         #
         if self.outcomes[self.origen] == 'P':
-            text = "Play: Standard Play\n"
-        else
-            text = "Play: Misere Play\n"
-        text += "Period: " + str(self.period) + "\n"
-        text += "Preperiod: " + str(self.preperiod + "\n"
-        text += "Moves: " + str(self.moves) + "\n"
+            text = "Play: \t\tStandard Play\n"
+        else:
+            text = "Play: \t\tMisere Play\n"
+        text += "Period: \t" + str(self.period) + "\n"
+        text += "Preperiod: \t" + str(self.preperiod) + "\n"
+        text += "Moves: \t\t" + str(self.moves) + "\n"
+        return text
 
 
-    def run(self):
-        if self.print_report_when_done:
-            print(report())
 
     #
     # below are setter functions
@@ -64,7 +131,7 @@ class Nim:
         self.origen = self.fillTuple(())
         self.period = self.fillTuple((),1)
         self.preperiod = self.origen
-        self.rectangle = self.period
+        self.rectangle = self.fillTuple((),2)
         self.moves = self.setStandardMoves()
         self.outcomes = {}
 
@@ -82,32 +149,6 @@ class Nim:
             for j in range(i):
                 moves.append(self.incrementTuple(base_tuple,j))
         return moves
-
-    def evaluateTuple(self,t):
-        if t in self.outcomes:
-            return outcomes[t]
-        if t not in self.outcomes:
-            if self.offthegrid(t):
-                if not self.origen_value_is_P:
-                    self.outcomes[t] = 'P'
-                else:
-                    self.outcomes[t] = 'N'
-            else:
-                self.outcomes[t] = 'P'
-                for move in moves:
-                    if self.evaluateTuple(addTuples(t,move)) == 'P':
-                        self.outcomes[t] = 'P'
-                        break
-
-    def offthegrid(self,t):
-        #
-        # if a given tuple contains a negative scalar
-        # return True, else return False
-        #
-            for idx in range(len(t)):
-                if t[idx] == -1:
-                    return True
-            return False
 
     #
     # Tuple manipulation functions
