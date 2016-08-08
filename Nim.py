@@ -13,24 +13,43 @@ class Nim:
     # The moves list is populated by various setMoves functions. By default it is set
     # to setStandardMoves().
 
-        self.dimensions = 1 # The maximum number of dimensions to consider
-        self.origen = () # The 0 vector
-        self.period = () # The current quotiant
+        self.dimensions = 0 # The maximum number of dimensions to consider
+        self.max_depth = 100 # The max length of the rectangle in any dimension
+        self.origen = ()    # The 0 vector
+        self.period = ()    # The currently considered quotiant
         self.preperiod = () # The lowest position in each dimension for which
                             # the period holds
         self.outcomes = {}  # a dictionary (key-value pair) of positions and their outcomes
                             # outcomes are either 'N' or 'P'
         self.rectangle = () # The shape of the rectangle needed to work out the period
 
+        self.setNormalPlay()    
         self.setDimensions(3) # sets above parameters to 3 dimensional objects
         self.moves = self.setStandardMoves() # A list of the moves, according to the rules
-        self.origen_value_is_P = True
-        self.setNormalPlay()    
 
         self.print_report_when_done = True
 
         if run:
             self.run()
+    
+    def __repr__(self:
+            return self.report()
+
+    def report(self):
+        return slef.report_parameters()
+
+    def report_parameters(self):
+        #
+        # This Function returns a string that lists the values of the parameters line by line
+        #
+        if self.outcomes[self.origen] == 'P':
+            text = "Play: Standard Play\n"
+        else
+            text = "Play: Misere Play\n"
+        text += "Period: " + str(self.period) + "\n"
+        text += "Preperiod: " + str(self.preperiod + "\n"
+        text += "Moves: " + str(self.moves) + "\n"
+
 
     def run(self):
         if self.print_report_when_done:
@@ -48,17 +67,11 @@ class Nim:
         self.rectangle = self.period
         self.moves = self.setStandardMoves()
         self.outcomes = {}
-        if self.origen_value_is_P:
-            setNormalPlay()
-        else:
-            setMiserePlay()
 
     def setNormalPlay(self):
-        self.origen_value_is_P = True
         self.outcomes[self.origen] = 'P'
 
     def setMiserePlay(self):
-        self.origen_value_is_P = False
         self.outcomes[self.origen] = 'N'
 
     def setStandardMoves(self):
