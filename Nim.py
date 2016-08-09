@@ -234,7 +234,7 @@ class Nim:
         for dim in range(pos, self.dimensions -1):
             if t[dim] > self.rectangle[dim]:
                 t = t[:dim] + (0,) + t[(dim +1):]
-                t = elf.incrementTuple(t,dim + 1)
+                t = self.incrementTuple(t,dim + 1)
         return t
 
     def periodHolds(self,current_dimension):
