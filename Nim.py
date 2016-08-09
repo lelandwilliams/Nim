@@ -36,6 +36,7 @@ class Nim:
         #
         done = False
         while not done:
+            self.rectangle = self.addTuples(self.period, self.preperiod)
             self.fillRectangle()
         if self.print_report_when_done:
             print(report())
@@ -49,10 +50,10 @@ class Nim:
         # the dimensions of self.rectangle has had it's outcome determined
         # and recorded in self.outcomes
         #
-        t = self.origen()
+        t = self.origen
         while t[-1] <= self.rectangle[-1]:
             self.evaluateTuple(t)
-            self.incrementTupleWithCarry(t)
+            t = self.incrementTupleWithCarry(t)
 
 
     def fillRectangleOld(self):
@@ -172,7 +173,6 @@ class Nim:
         self.origen = self.fillTuple(())
         self.period = self.fillTuple((),1)
         self.preperiod = self.origen
-        self.rectangle = self.fillTuple((),2)
         self.moves = self.setStandardMoves()
         self.outcomes = {}
 
