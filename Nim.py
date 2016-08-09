@@ -1,5 +1,3 @@
-
-
 class Nim:
     def __init__(self, run = False):
     # The __init__ function is automatically run when an instance of the 
@@ -42,8 +40,8 @@ class Nim:
         if self.print_report_when_done:
             print(report())
 
-    def fillRectangle():
-        t = self.incrementTuple(self.origen,0))
+    def fillRectangle(self):
+        t = self.incrementTuple(self.origen,0)
         done = False
         while not done:
             while t[0] < self.rectangle[0]:
@@ -61,10 +59,6 @@ class Nim:
                         carry = False
                         done = True
 
-
-
-    
-    
     def evaluateTuple(self,t):
         #
         # Input: a tuple
@@ -76,17 +70,17 @@ class Nim:
         #
 
         if t in self.outcomes:
-            return outcomes[t]
-        if t not in self.outcomes:
+            return self.outcomes[t]
+        else:
             if self.offthegrid(t):
                 return 'N'
             else:
-                self.outcomes[t] = 'N'
-                for move in moves:
-                    if self.evaluateTuple(addTuples(t,move)) == 'P':
+                for move in self.moves:
+                    if self.evaluateTuple(self.addTuples(t,move)) == 'P':
                         self.outcomes[t] = 'P'
-                        break
-                return self.outcomes[t]
+                        return 'P'
+                self.outcomes[t] = 'N'
+                return 'N'
 
     def offthegrid(self,t):
         #
@@ -107,17 +101,49 @@ class Nim:
     def report(self):
         return self.report_parameters()
 
+    def reportGrids(self, cur_t = None):
+        if cut_t == None:
+            cur_t = self.origen()
+        if self.dimensions == 1:
+            text = ""
+            for i in range(self.rectangle[0]):
+                text += self.outcomes[cut_t] + " "
+            return text
+        else:
+            return self.printGrid(cur_t)
+
+    def printGrid(self, cur_t):
+        if cur_t[2] < self.rectangle[2]:
+            text = "\n" 
+            for dim in range(2,self.dimensions):
+                text += "x_" + str(dim) + " = " + cur_t[dim] + "  "
+            text += "\n "
+            for i in range(self.rectangle[0]):
+                text+= " " + str(i) + " "
+            for i in range(self.rectangle[1]):
+            
+                text+= "\n" + str(i) + " "
+                for j in range(self.rectangle[0]):
+                    text +=  self.outcomes[(j,) + (i,) + cur_t[2:]]
+            return self.printGrid(self.incrementTuple(cur_t, 2))
+        else:
+            cur_t = self.incrementTupleWithCarry(cur_t,2)
+            if cur_t[-1] > self.rectangle[-1]:
+                return "\n\n"
+            else:
+                return text + self.printGrid
+
     def report_parameters(self):
         #
         # This Function returns a string that lists the values of the parameters line by line
         #
         if self.outcomes[self.origen] == 'P':
-            text = "Play: \t\tStandard Play\n"
+            text = 'Play: \t\tStandard Play\n'
         else:
             text = "Play: \t\tMisere Play\n"
-        text += "Period: \t" + str(self.period) + "\n"
-        text += "Preperiod: \t" + str(self.preperiod) + "\n"
-        text += "Moves: \t\t" + str(self.moves) + "\n"
+        text += 'Period: \t' + str(self.period) + '\n'
+        text += 'Preperiod: \t' + str(self.preperiod) + '\n'
+        text += 'Moves: \t\t' + str(self.moves) + '\n'
         return text
 
 
@@ -183,6 +209,17 @@ class Nim:
         # position incremented by 1.
         indexTuple = self.fillTuple( (), 0, pos ) + (1,)
         return self.addTuples(t, self.fillTuple(indexTuple))
+
+    def incrementTupleWithCarry(self,t,pos = 0):
+        #
+        # Input: a tuple, t & the position to increment (defaults to 0)
+        # Output: the incremented tuple, with values of the boundary 'carried' to the next level
+        # Function does not carry the uppermost (rightmost) dimension
+        t = self.incrementTuple(t,pos)
+        for dim in range(pos, self.dimensions -1):
+            if t[dim] > self.rectangle[dim]:
+                t = t[:dim] + (0,) + t[(dim +1):]
+                t = elf.incrementTuple(t,dim + 1)
 
     def periodHolds(self,current_dimension):
         global outcomes, period, preperiod, outcomes, dimensions
