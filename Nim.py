@@ -56,26 +56,6 @@ class Nim:
             self.evaluateTuple(t)
             t = self.incrementTupleWithCarry(t)
 
-
-    def fillRectangleOld(self):
-        t = self.incrementTuple(self.origen,0)
-        done = False
-        while not done:
-            while t[0] < self.rectangle[0]:
-                self.evaluateTuple(t)
-                t = self.incrementTuple(t,0)
-            carry = True
-            carry_dimension = 1
-            while carry:
-                t = self.fillTuple((), 0, carry_dimension -1) + t[carry_dimension:]
-                if t[carry_dimension] < self.rectangle[carry_dimension]:
-                    carry = False
-                else:
-                    carry_dimension += 1
-                    if carry_dimension == self.dimensions:
-                        carry = False
-                        done = True
-
     def evaluateTuple(self,t):
         #
         # Input: a tuple
@@ -133,7 +113,7 @@ class Nim:
         if cur_t[2] < self.rectangle[2]:
             text = "\n" 
             for dim in range(2,self.dimensions):
-                text += "x_" + str(dim) + " = " + cur_t[dim] + "  "
+                text += "x_" + str(dim) + " = " + str(cur_t[dim]) + "  "
             text += "\n "
             for i in range(self.rectangle[0]):
                 text+= " " + str(i) + " "
