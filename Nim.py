@@ -74,10 +74,10 @@ class Nim:
             else:
                 for move in self.moves:
                     if self.evaluateTuple(self.addTuples(t,move)) == 'P':
-                        self.outcomes[t] = 'P'
-                        return 'P'
-                self.outcomes[t] = 'N'
-                return 'N'
+                        self.outcomes[t] = 'N'
+                        return 'N'
+                self.outcomes[t] = 'P'
+                return 'P'
 
     def offthegrid(self,t):
         #
@@ -96,11 +96,13 @@ class Nim:
             return self.report()
 
     def report(self):
-        return self.report_parameters()
+        return self.report_parameters() + self.reportGrids()
 
     def reportGrids(self, cur_t = None):
         #
-        # Input: cur_t, a tuple
+        # Input: cur_t, a tuple if for some reason you want the reports to begin 
+        #       at some place other than the origen.
+        #   If a tuple is not given, the report begins at the origen.
         # Output: a string containg the values of self.outcomes
         #   arranged in grids
         #
