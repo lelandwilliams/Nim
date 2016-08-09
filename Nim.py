@@ -235,6 +235,7 @@ class Nim:
             if t[dim] > self.rectangle[dim]:
                 t = t[:dim] + (0,) + t[(dim +1):]
                 t = elf.incrementTuple(t,dim + 1)
+        return t
 
     def periodHolds(self,current_dimension):
         global outcomes, period, preperiod, outcomes, dimensions
