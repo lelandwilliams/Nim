@@ -41,6 +41,21 @@ class Nim:
             print(report())
 
     def fillRectangle(self):
+        #
+        # Input: none
+        # Output: none
+        #
+        # This function makes sure that every lattice point inside (inclusively)
+        # the dimensions of self.rectangle has had it's outcome determined
+        # and recorded in self.outcomes
+        #
+        t = self.origen()
+        while t[-1] <= self.rectangle[-1]:
+            self.evaluateTuple(t)
+            self.incrementTupleWithCarry(t)
+
+
+    def fillRectangleOld(self):
         t = self.incrementTuple(self.origen,0)
         done = False
         while not done:
