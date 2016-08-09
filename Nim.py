@@ -68,16 +68,15 @@ class Nim:
 
         if t in self.outcomes:
             return self.outcomes[t]
-        else:
-            if self.offthegrid(t):
+        elif self.offthegrid(t):
                 return 'N'
-            else:
-                for move in self.moves:
-                    if self.evaluateTuple(self.addTuples(t,move)) == 'P':
-                        self.outcomes[t] = 'N'
-                        return 'N'
-                self.outcomes[t] = 'P'
-                return 'P'
+        else:
+            for move in self.moves:
+                if self.evaluateTuple(self.addTuples(t,move)) == 'P':
+                    self.outcomes[t] = 'N'
+                    return 'N'
+            self.outcomes[t] = 'P'
+            return 'P'
 
     def offthegrid(self,t):
         #
@@ -106,6 +105,10 @@ class Nim:
         # Output: a string containg the values of self.outcomes
         #   arranged in grids
         #
+        # Note: currently the function only prints out the area within the 
+        # rectangle. Any tuples that are evaluated and added to outcomes yet
+        # not within the rectangle are not printed.
+        #
         if cur_t == None:
             cur_t = self.origen
 
@@ -118,14 +121,17 @@ class Nim:
             return self.printGrid(cur_t)
 
     def printGrid(self, t):
+        #
+        # Helper function for reportGrids() for when the tuple has more than 1 dimension
+        #
         text = ""
         while t[-1] <= self.rectangle[-1]:
             if (t[0] == 0) and t[1] == 0:
                 text += "\n\n"
                 for dim in range(2,self.dimensions):
-                    text += "x_" + str(dim) + " = " + str(t[dim]) + ";  "
+                    text += "x_" + str(dim +1) + " = " + str(t[dim]) + ";  "
                 text += "\n "
-                for i in range(self.rectangle[1] +1):
+                for i in range(self.rectangle[0] +1):
                     text+= " " + str(i) 
             if t[0] == 0:
                 text+= "\n" + str(t[1]) + " "
