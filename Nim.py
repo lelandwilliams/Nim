@@ -40,7 +40,7 @@ class Nim:
             self.fillRectangle()
             done = True
         if self.print_report_when_done:
-            print(report())
+            print(self)
 
     def fillRectangle(self):
         #
@@ -120,7 +120,7 @@ class Nim:
 
     def reportGrids(self, cur_t = None):
         if cur_t == None:
-            cur_t = self.origen()
+            cur_t = self.origen
         if self.dimensions == 1:
             text = ""
             for i in range(self.rectangle[0]):
