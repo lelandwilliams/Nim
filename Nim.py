@@ -99,9 +99,15 @@ class Nim:
         return self.report_parameters()
 
     def reportGrids(self, cur_t = None):
+        #
+        # Input: cur_t, a tuple
+        # Output: a string containg the values of self.outcomes
+        #   arranged in grids
+        #
         if cur_t == None:
             cur_t = self.origen
-        if self.dimensions == 1:
+
+        if self.dimensions == 1: 
             text = ""
             for i in range(self.rectangle[0]):
                 text += self.outcomes[cur_t] + " "
@@ -109,26 +115,23 @@ class Nim:
         else:
             return self.printGrid(cur_t)
 
-    def printGrid(self, cur_t):
-        if cur_t[2] < self.rectangle[2]:
-            text = "\n" 
-            for dim in range(2,self.dimensions):
-                text += "x_" + str(dim) + " = " + str(cur_t[dim]) + "  "
-            text += "\n "
-            for i in range(self.rectangle[0]):
-                text+= " " + str(i) + " "
-            for i in range(self.rectangle[1]):
-            
-                text+= "\n" + str(i) + " "
-                for j in range(self.rectangle[0]):
-                    text +=  self.outcomes[(j,) + (i,) + cur_t[2:]]
-            return self.printGrid(self.incrementTuple(cur_t, 2))
-        else:
-            cur_t = self.incrementTupleWithCarry(cur_t,2)
-            if cur_t[-1] > self.rectangle[-1]:
-                return "\n\n"
-            else:
-                return text + self.printGrid
+    def printGrid(self, t):
+        text = ""
+        while t[-1] <= self.rectangle[-1]:
+            if (t[0] == 0) and t[1] == 0:
+                text += "\n\n"
+                for dim in range(2,self.dimensions):
+                    text += "x_" + str(dim) + " = " + str(t[dim]) + ";  "
+                text += "\n "
+                for i in range(self.rectangle[1] +1):
+                    text+= " " + str(i) 
+            if t[0] == 0:
+                text+= "\n" + str(t[1]) + " "
+
+            text+= self.outcomes[t] + " "
+            t = self.incrementTupleWithCarry(t)
+        return text
+
 
     def report_parameters(self):
         #
