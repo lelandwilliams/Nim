@@ -38,6 +38,7 @@ class Nim:
         while not done:
             self.rectangle = self.addTuples(self.period, self.preperiod)
             self.fillRectangle()
+            done = True
         if self.print_report_when_done:
             print(report())
 
@@ -118,12 +119,12 @@ class Nim:
         return self.report_parameters()
 
     def reportGrids(self, cur_t = None):
-        if cut_t == None:
+        if cur_t == None:
             cur_t = self.origen()
         if self.dimensions == 1:
             text = ""
             for i in range(self.rectangle[0]):
-                text += self.outcomes[cut_t] + " "
+                text += self.outcomes[cur_t] + " "
             return text
         else:
             return self.printGrid(cur_t)
