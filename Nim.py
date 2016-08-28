@@ -164,6 +164,7 @@ class Nim:
         self.dimensions = dimensions
         self.origen = self.fillTuple(())
         self.period = self.fillTuple((),1)
+        self.rectangle = self.origen
         self.preperiod = self.origen
         self.moves = self.setStandardMoves()
         self.outcomes = {}
