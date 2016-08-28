@@ -44,6 +44,15 @@ class Nim:
         if self.print_report_when_done:
             print(self)
 
+    def checkDimension(self, dim):
+        #
+        # Input: dimemsion to check
+        # Output: True if the last tuple in the given dimension has a match in the prior dimension
+        #         False otherwise
+        #
+        check_tuple = fillTuple(())
+        #for 
+
     def fillRectangle(self, dim=-1):
         #
         # Input: number of dimensions to fill
@@ -245,4 +254,21 @@ class Nim:
             if outcomes[cur_position] != outcomes[addTuples(cur_position, indexer)]:
                 return false
             cur_position = addTuples(cur_position, indexer)
+
+    def setTuplePositionXtoY(self, t, x, y):
+        #
+        # Inputs: a tuple t, the desired position x, and the new value y
+        # output: a tuple that is identical to the input tuple, with the exception
+        #   that it's xth position has been changed to y
+        #
+    
+        new_t = ()
+        for i in range(len(t)):
+            if i == x:
+                new_t += (y,)
+            else:
+                new_t += (t[i],)
+        return new_t
+
+
 
