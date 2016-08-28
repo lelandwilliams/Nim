@@ -35,10 +35,12 @@ class Nim:
         # This function is the main loop of the program
         #
         done = False
+        current_dimension = 1
         while not done:
-            self.rectangle = self.addTuples(self.period, self.preperiod)
+            self.rectangle = self.incrementTuple(self.rectangle, current_dimension -1)
             self.fillRectangle()
-            done = True
+            if self.checkDimension(current_dimension):
+                done = True
         if self.print_report_when_done:
             print(self)
 
@@ -231,6 +233,10 @@ class Nim:
         return t
 
     def periodHolds(self,current_dimension):
+        #
+        # This function is leftover from the previous version of the program
+        # It is now currently being used, and will probably be removed
+        #
         global outcomes, period, preperiod, outcomes, dimensions
         cur_position = preperiod
         indexer = fillTuples((),0, current_dimension) + period[current_dimension]
