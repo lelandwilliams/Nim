@@ -39,7 +39,8 @@ class Nim:
         while not done:
             self.rectangle = self.incrementTuple(self.rectangle, current_dimension -1)
             self.fillRectangle()
-            if self.checkDimension(current_dimension):
+            if True:
+#           if self.checkDimension(current_dimension):
                 done = True
         if self.print_report_when_done:
             print(self)
@@ -50,7 +51,7 @@ class Nim:
         # Output: True if the last tuple in the given dimension has a match in the prior dimension
         #         False otherwise
         #
-        check_tuple = fillTuple(())
+        check_tuple = self.fillTuple(())
         #for 
 
     def fillRectangle(self, dim=-1):
@@ -98,6 +99,23 @@ class Nim:
                 if t[idx] == -1:
                     return True
             return False
+
+    def recUpToDims(self, dim, t):
+        #
+        # Input, the max dimension to include, and a tuple t
+        #       Note that the function begins with t, so the first few dimensions
+        #       of the given tuple t should be set to zero, if that is desired
+        #       This function does not check for that.
+        # Output: a string of every outcome inside self.rectangle
+        #       of the first dim dimensions within the higher dimensions 
+        #       specified by the input tuple t
+        s = ""
+        cur_t = t
+        while cur_t[dim] <= t[dim]:
+            s += self.outcomes[cur_t]
+            cur_t = self.incrementTupleWithCarry(cur_t)
+        return s
+
 #
     # The following are functions to create report strings
     #
@@ -163,6 +181,7 @@ class Nim:
         text += 'Period: \t' + str(self.period) + '\n'
         text += 'Preperiod: \t' + str(self.preperiod) + '\n'
         text += 'Moves: \t\t' + str(self.moves) + '\n'
+        text += 'Rectangle: \t' + str(self.rectangle) + '\n'
         return text
 
 
