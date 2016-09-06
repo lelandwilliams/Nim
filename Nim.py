@@ -1,4 +1,22 @@
 class Nim:
+    #
+    # This class provides the following functions:
+    # __init__(self, run)
+    # run(self)
+    # checkDimension(self,dim)
+    # fillRectangle(self,dim)
+    # evaluateTuple(self,t)
+    # offthegrid(self,t)
+    # recUpToDims(self, dim, t)
+    # __repr__(self)
+    # report(self)
+    # reportGrids(self, t)
+    # reportParameters(self)
+    # setDimensions(self, dimensions)
+    # setNomalPlay(self)
+    # setMiserePlay(self)
+    # setStandardMoves(self)
+    #
     def __init__(self, run = False):
     # The __init__ function is automatically run when an instance of the 
     # class is created.
@@ -48,7 +66,7 @@ class Nim:
     def checkDimension(self, dim):
         #
         # Input: dimemsion to check
-        # Output: True if the last tuple in the given dimension has a match in the prior dimension
+        # Output: True if the last slice in the given dimension has a match in the prior slices
         #         False otherwise
         #
         check_tuple = self.fillTuple(())
