@@ -60,6 +60,7 @@ class Nim:
         #
         done = False
         current_dimension = 1
+        cur_t = self.fillTuple()
         while not done:
             self.rectangle = self.incrementTuple(self.rectangle, current_dimension -1)
             self.fillRectangle()
@@ -71,11 +72,10 @@ class Nim:
 
     def checkDimension(self, dim,t):
         #
-        # Input: dimemsion to check
+        # Input: dimensions of the slice, a tuple that specifies which dimensions each slice lives in
         # Output: True if the last slice in the given dimension has a match in the prior slices
         #         False otherwise
         #
-        check_tuple = self.fillTuple(())
         #for 
 
     def fillRectangle(self, dim=-1):
