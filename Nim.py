@@ -69,7 +69,7 @@ class Nim:
         if self.print_report_when_done:
             print(self)
 
-    def checkDimension(self, dim):
+    def checkDimension(self, dim,t):
         #
         # Input: dimemsion to check
         # Output: True if the last slice in the given dimension has a match in the prior slices
