@@ -16,6 +16,12 @@ class Nim:
     # setNomalPlay(self)
     # setMiserePlay(self)
     # setStandardMoves(self)
+    # addTuples(self, t1, t2)
+    # decrementTuple(self,t, pos)
+    # fillTuple(self,t fill,d)
+    # incrementTuple(self,t,pos)
+    # incrementTupleWithCarry(self,t,pos)
+    # setTuplePositionXtoY(self,t,x,y)
     #
     def __init__(self, run = False):
     # The __init__ function is automatically run when an instance of the 
