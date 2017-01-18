@@ -149,7 +149,8 @@ class Nim:
             return self.report()
 
     def report(self):
-        return self.report_parameters() + self.reportGrids()
+#        return self.report_parameters() + self.reportGrids()
+        return self.report_parameters() 
 
     def reportGrids(self, cur_t = None):
         #
