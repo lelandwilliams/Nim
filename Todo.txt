@@ -1,0 +1,2 @@
+look at evaluateTuple to see if it's return values are consistant.
+I may want to alter it.
