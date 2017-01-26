@@ -16,9 +16,7 @@ class NimReport:
 
     def report_parameters(self):
 
-        #
         # This Function returns a string that lists the values of the parameters line by line
-        #
 
         if self.outcomes[self.origen] == 'P':
             text = 'Play: \t\tStandard Play\n'
@@ -54,9 +52,9 @@ class NimReport:
             return self.printGrid(cur_t)
 
     def printGrid(self, t):
-        #
+
         # Helper function for reportGrids() for when the tuple has more than 1 dimension
-        #
+
         text = ""
         while t[-1] <= self.rectangle[-1]:
             if (t[0] == 0) and t[1] == 0:
