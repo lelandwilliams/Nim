@@ -1,5 +1,5 @@
-class Nim:
-    #
+class NimBase:
+
     # This class provides the following functions:
     # __init__(self, run)
     # run(self)
@@ -22,18 +22,19 @@ class Nim:
     # incrementTuple(self,t,pos)
     # incrementTupleWithCarry(self,t,pos)
     # setTuplePositionXtoY(self,t,x,y)
-    #
+
     def __init__(self, run = False):
-    # The __init__ function is automatically run when an instance of the 
-    # class is created.
-    # The parameter run indicates whether the class should run with the 
-    # default parameters set below, or (by default) just create the structures
-    #
-    # The class tuples are predefined to () until the setup function is run,
-    # which automatically creates them according to the given dimension
-    #
-    # The moves list is populated by various setMoves functions. By default it is set
-    # to setStandardMoves().
+
+        # The __init__ function is automatically run when an instance of the 
+        # class is created.
+        # The parameter run indicates whether the class should run with the 
+        # default parameters set below, or (by default) just create the structures
+        #
+        # The class tuples are predefined to () until the setup function is run,
+        # which automatically creates them according to the given dimension
+        #
+        # The moves list is populated by various setMoves functions. By default it is set
+        # to setStandardMoves().
 
         self.dimensions = 0 # The maximum number of dimensions to consider
         self.max_depth = 100 # The max length of the rectangle in any dimension
