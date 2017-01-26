@@ -111,6 +111,15 @@ class NimBase:
             self.outcomes[t] = 'P'
             return 'P'
 
+    def getOutcome(self, t):
+
+        # returns the P/N value of t
+        # if t is not set, it evaluates it first
+
+        if t not in self.outcomes:
+            self.evaluateTuple(t)
+        return self.outcomes(t)
+
     def offthegrid(self,t):
         #
         # if a given tuple contains a negative scalar
