@@ -71,5 +71,3 @@ class NimReport:
             t = self.incrementTupleWithCarry(t)
         return text
 
-
-
