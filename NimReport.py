@@ -43,10 +43,12 @@ class NimReport:
         if max_dimension == 0:
             return "No dimensions to report\n"
 
-        if self.dimensions == 1: 
+        cur_t = self.origen
+        if max_dimensions == 1: 
             text = ""
-            for i in range(self.rectangle[1]):
-                text += self.outcomes[cur_t] + " "
+            for i in range(self.report_boundary[1]):
+                text += self.getOutcome[cur_t] + " "
+                cur_t = self.incrementTuple(cur_t,1)
             return text
         else:
             return self.printGrid(cur_t)
