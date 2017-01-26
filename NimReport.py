@@ -8,6 +8,9 @@ class NimReport(NimBase):
     # reportGrids(self, t)
     # reportParameters(self)
 
+    def __init__(self):
+        super().__init__()
+
     def __repr__(self):
             return self.report()
 
