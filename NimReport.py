@@ -30,20 +30,20 @@ class NimReport:
         text += 'Rectangle: \t' + str(self.rectangle) + '\n'
         return text
 
-    def reportGrids(self, cur_t = None):
+    def reportGrids(self, report_boundary = self.boundary):
+
+        # Input: report_boundary, a tuple representing the boundary of you wish to print
         #
-        # Input: cur_t, a tuple if for some reason you want the reports to begin 
-        #       at some place other than the origen.
-        #   If a tuple is not given, the report begins at the origen.
         # Output: a string containg the values of self.outcomes
         #   arranged in grids
-        #
-        # Note: currently the function only prints out the area within the 
-        # rectangle. Any tuples that are evaluated and added to outcomes yet
-        # not within the rectangle are not printed.
-        #
-        if cur_t == None:
-            cur_t = self.origen
+        
+        max_dimension = 0 # see how many dimensions the boundary tuple contains
+        for i in range(len(report_boundary)):
+            if report_boundary[i] != None and report_boundary[i] != 0:
+                max_dimension += 1
+
+        if max_dimension == 0:
+            return "No dimensions to report\n"
 
         if self.dimensions == 1: 
             text = ""
