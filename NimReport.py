@@ -1,4 +1,6 @@
-class NimReport:
+from NimBase.py import NimBase
+
+class NimReport(NimBase):
 
     # This class contains the following report functions for Nim:
     # __repr__(self)
@@ -11,8 +13,7 @@ class NimReport:
 
     def report(self):
 
-#        return self.report_parameters() + self.reportGrids()
-        return self.report_parameters() 
+        return self.report_parameters() + self.reportGrids()
 
     def report_parameters(self):
 
