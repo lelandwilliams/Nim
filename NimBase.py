@@ -52,9 +52,9 @@ class NimBase:
             self.run()
     
     def run(self):
-        # 
+         
         # This function is the main loop of the program
-        #
+        
         done = False
         current_dimension = 1
         cur_t = self.fillTuple()
@@ -68,12 +68,11 @@ class NimBase:
             print(self)
 
     def checkDimension(self, dim,t):
-        #
+        
         # Input: dimensions of the slice, a tuple that specifies which dimensions each slice lives in
         # Output: True if the last slice in the given dimension has a match in the prior slices
         #         False otherwise
-        #
-        #for 
+
         pass
 
     def fillRectangle(self, dim=-1):
