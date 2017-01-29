@@ -13,10 +13,13 @@ class NimTuples:
         
         # returns a new tuple constructed
         # by component-wise addition from the two input tuples
-        #
-        t = (None,)
-        for i in range(1, len(t1)):
-            t += t1[i] + t2[i],
+        
+        t = tuple()
+        for i in range(0, len(t1)):
+            if t1[i] == None:
+                t += None,
+            else:
+                t += t1[i] + t2[i],
         return t
 
     def decrementTuple(self,t, pos = 1):
