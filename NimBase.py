@@ -1,4 +1,6 @@
-from NimTuples.py import NimTuples
+from NimTuples import NimTuples
+#import NimTuples
+
 class NimBase(NimTuples):
 
 # This class provides the following functions:
@@ -140,8 +142,6 @@ class NimBase(NimTuples):
             s += self.outcomes[cur_t]
             cur_t = self.incrementTupleWithCarry(cur_t)
         return s
-
-
 
     #
     # below are setter functions
