@@ -67,20 +67,6 @@ class NimTuples:
                 t = self.incrementTuple(t,dim + 1)
         return t
 
-    def periodHolds(self,current_dimension):
-        #
-        # This function is leftover from the previous version of the program
-        # It is now currently being used, and will probably be removed
-        #
-        global outcomes, period, preperiod, outcomes, dimensions
-        cur_position = preperiod
-        indexer = fillTuples((),0, current_dimension) + period[current_dimension]
-        indexer = fillTuples(indexer)
-        while(addTuples(cur_position, indexer) in outcomes):
-            if outcomes[cur_position] != outcomes[addTuples(cur_position, indexer)]:
-                return false
-            cur_position = addTuples(cur_position, indexer)
-
     def setTuplePositionXtoY(self, t, x, y):
         #
         # Inputs: a tuple t, the desired position x, and the new value y
