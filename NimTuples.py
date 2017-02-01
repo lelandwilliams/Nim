@@ -79,7 +79,7 @@ class NimTuples:
         #       the original tuple is returned.
 
         if (t[pos] != None) and (pos < len(t) - 1):
-            if t[pos] == self.exploration_boundary[pos]: # if position is at maximum value
+            if t[pos] == self.explored_region[pos]: # if position is at maximum value
                 self.TuplePositionXtoY(t, pos, 0) # set selected position to 0
                 t = self.incrementTupleWithCarry(t,pos + 1) # and increment the next position
 
