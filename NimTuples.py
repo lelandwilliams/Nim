@@ -75,11 +75,11 @@ class NimTuples:
         
         # Input: a tuple, t & the position to increment (defaults to 1)
         # Output: the incremented tuple, with values of the boundary 'carried' to the next level
-        # Function does not carry the uppermost (rightmost) dimension
+        #       unless the value of the position is None, or the Tuple is maxed out, in which cases
+        #       the original tuple is returned.
 
-        if t[pos] != Null:
-            if t[pos] == self.exploration_boundary[pos] and # if position is at maximum value
-            pos < len(t) - 1: # and position is not the last
+        if (t[pos] != None) and (pos < len(t) - 1):
+            if t[pos] == self.exploration_boundary[pos]: # if position is at maximum value
                 self.TuplePositionXtoY(t, pos, 0) # set selected position to 0
                 t = self.incrementTupleWithCarry(t,pos + 1) # and increment the next position
 
