@@ -85,11 +85,10 @@ class NimTuples:
         return t
 
     def setTuplePositionXtoY(self, t, x, y):
-        #
+        
         # Inputs: a tuple t, the desired position x, and the new value y
         # output: a tuple that is identical to the input tuple, with the exception
         #   that it's xth position has been changed to y
-        #
     
         new_t = ()
         for i in range(len(t)):
