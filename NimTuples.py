@@ -58,11 +58,18 @@ class NimTuples:
         # this function takes in a tuple and a dimension,
         # and returns the tuple but with the value in the given
         # position incremented by 1.
-        if pos == 0:    #pos 0 is not incrementable
-            return t
 
-        indexTuple = self.fillTuple( (), 0, pos ) + (1,)
-        return self.addTuples(t, self.fillTuple(indexTuple))
+        new_t = tuple()
+        for i in range(len(t)):
+            if t[i] == None:
+                new_t += None,
+            elif i == pos:
+                new_t += t[i] + 1,
+            else:
+                new_t += t[i],
+
+        return new_t
+
 
     def incrementTupleWithCarry(self,t,pos = 1):
         
