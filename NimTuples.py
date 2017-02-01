@@ -76,14 +76,12 @@ class NimTuples:
         # Input: a tuple, t & the position to increment (defaults to 1)
         # Output: the incremented tuple, with values of the boundary 'carried' to the next level
         # Function does not carry the uppermost (rightmost) dimension
-        if pos == 0: #pos 0 is not incrementable
-            return t
 
-        t = self.incrementTuple(t,pos)
-        for dim in range(pos, self.dimensions + 1):
-            if t[dim] > self.rectangle[dim]:
-                t = t[:dim] + (0,) + t[(dim +1):]
-                t = self.incrementTuple(t,dim + 1)
+        if t[pos] != Null:
+            if t[pos] == self.exploration_boundary[pos]: # if position is at maximum value
+                self.TuplePositionXtoY(t, pos, 0) # set selected position to 0
+                t = self.incrementTuple(t,pos + 1) # and increment the next position
+
         return t
 
     def setTuplePositionXtoY(self, t, x, y):
