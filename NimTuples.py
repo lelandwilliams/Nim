@@ -78,9 +78,10 @@ class NimTuples:
         # Function does not carry the uppermost (rightmost) dimension
 
         if t[pos] != Null:
-            if t[pos] == self.exploration_boundary[pos]: # if position is at maximum value
+            if t[pos] == self.exploration_boundary[pos] and # if position is at maximum value
+            pos < len(t) - 1: # and position is not the last
                 self.TuplePositionXtoY(t, pos, 0) # set selected position to 0
-                t = self.incrementTuple(t,pos + 1) # and increment the next position
+                t = self.incrementTupleWithCarry(t,pos + 1) # and increment the next position
 
         return t
 
