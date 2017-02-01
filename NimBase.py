@@ -36,7 +36,8 @@ class NimBase(NimTuples):
                             # the period holds
         self.outcomes = {}  # a dictionary (key-value pair) of positions and their outcomes
                             # outcomes are either 'N' or 'P'
-        self.rectangle = () # The shape of the rectangle needed to work out the period
+        self.rectangle = () # The shape of the rectangle needed to work out the period, being deprecated in favor of explored_region
+        self.explored_region = self.rectange # Some foo until name change rectangle -> explored_region is finished
 
         self.setDimensions(3) # sets above parameters to 3 dimensional objects
         self.moves = self.setStandardMoves() # A list of the moves, according to the rules
@@ -52,18 +53,20 @@ class NimBase(NimTuples):
         # This function is the main loop of the program
         
         done = False
-        current_dimension = 1
-        cur_t = self.fillTuple()
+        cur_dimension = 1   # start by looking for a pattern in dimension 1
+        region_mask = self.origen # the mask tells which values of higher dimensions we are working in
+
         while not done:
-            self.rectangle = self.incrementTuple(self.rectangle, current_dimension -1)
-            self.fillRectangle()
-            if True:
-#           if self.checkDimension(current_dimension):
-                done = True
+            self.explored_region = self.incrementTuple(self.explored_region, cur_dimensiion)
+            if self.checkMatch(self.explored_region, cur_dimension):
+                cur_dimension += 1
+                if cur_dimension > self.dimensions:
+                    done = True
+
         if self.print_report_when_done:
             print(self)
 
-    def checkDimension(self, dim,t):
+    def checkMatch(self, dim,t):
         
         # Input: dimensions of the slice, a tuple that specifies which dimensions each slice lives in
         # Output: True if the last slice in the given dimension has a match in the prior slices
