@@ -37,7 +37,7 @@ class NimBase(NimTuples):
         self.outcomes = {}  # a dictionary (key-value pair) of positions and their outcomes
                             # outcomes are either 'N' or 'P'
         self.rectangle = () # The shape of the rectangle needed to work out the period, being deprecated in favor of explored_region
-        self.explored_region = self.rectange # Some foo until name change rectangle -> explored_region is finished
+        self.explored_region = self.rectangle # Some foo until name change rectangle -> explored_region is finished
 
         self.setDimensions(3) # sets above parameters to 3 dimensional objects
         self.moves = self.setStandardMoves() # A list of the moves, according to the rules
@@ -66,13 +66,14 @@ class NimBase(NimTuples):
         if self.print_report_when_done:
             print(self)
 
-    def checkMatch(self, dim,t):
+    def checkMatch(self, dim, t):
         
         # Input: dimensions of the slice, a tuple that specifies which dimensions each slice lives in
         # Output: True if the last slice in the given dimension has a match in the prior slices
         #         False otherwise
 
-        pass
+        if self.getOutcome(self.explored_region):
+            pass
 
     def fillRectangle(self, dim=-1):
         #
@@ -115,8 +116,8 @@ class NimBase(NimTuples):
         # returns the P/N value of t
         # if t is not set, it evaluates it first
 
-        if t not in self.outcomes:
-            self.evaluateTuple(t)
+#        if t not in self.outcomes:
+#            self.evaluateTuple(t)
         return self.outcomes(t)
 
     def offthegrid(self,t):
