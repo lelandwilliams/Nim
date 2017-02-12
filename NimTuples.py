@@ -46,7 +46,7 @@ class NimTuples:
         # if l is not given, l defaults to dimensions +1
 
         if l == None:
-            l = self.dimensions +1
+            l = self.max_dimensions +1
         if l == 0:
             return (None,)
         while len(t) < l:
