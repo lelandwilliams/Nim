@@ -57,20 +57,23 @@ class NimBase(NimTuples):
             self.rectangle = self.incrementTuple(self.rectangle, cur_dimension)
             match_value = self.checkForMatch(self.explored_region, cur_dimension)
             if match_value != -1: # -1 signals no match found
-                self.setPreperiod(cur_dimension, match_value
+                self.setPreperiod(cur_dimension, match_value)
                 cur_dimension += 1
 
         if self.print_report_when_done:
             print(self)
 
-    def checkMatch(self, dim, t):
+    def checkForMatch(self, dim, t):
         
         # Input: dimensions of the slice, a tuple that specifies which dimensions each slice lives in
-        # Output: True if the last slice in the given dimension has a match in the prior slices
-        #         False otherwise
+        # Output: The first dimension of the matching cell, or -1 if no match
 
-        if self.getOutcome(self.explored_region):
-            pass
+        if dim == 1:
+            check_tuple = self.setTuplePositionXtoY(self.rectangle, dim, self.preperiod[dim])
+            while check_tuple[dim] < self.rectangle[pos]:
+                if check_tuple[dim] == self.rectangle[pos]:
+                    return check_tuple[dim] 
+            return -1
 
     def fillRectangle(self, dim=-1):
         #
