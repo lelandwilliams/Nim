@@ -35,13 +35,12 @@ class NimBase(NimTuples):
         self.outcomes = {}  # a dictionary (key-value pair) of positions and their outcomes
                             # outcomes are either 'N' or 'P'
         self.rectangle = () # The shape of the rectangle needed to work out the period, being deprecated in favor of explored_region
-        self.explored_region = self.rectangle # Some foo until name change rectangle -> explored_region is finished
+        self.normal_play = True    
 
-        self.setDimensions(3) # sets above parameters to 3 dimensional objects
+        self.setDimensions(1) # sets above parameters to 3 dimensional objects
         self.moves = self.setStandardMoves() # A list of the moves, according to the rules
-        self.setNormalPlay()    
 
-        self.print_report_when_done = True
+        self.print_report_when_done = False
 
         if run:
             self.run()
@@ -51,28 +50,30 @@ class NimBase(NimTuples):
         # This function is the main loop of the program
         
         cur_dimension = 1   # start by looking for a pattern in dimension 1
-        self.rectange = self.origen
+        self.rectangle = self.origen
 
         while cur_dimension <= self.max_dimensions:
             self.rectangle = self.incrementTuple(self.rectangle, cur_dimension)
-            match_value = self.checkForMatch(self.explored_region, cur_dimension)
+            match_value = self.checkForMatch(self.rectangle, cur_dimension)
             if match_value != -1: # -1 signals no match found
-                self.setPreperiod(cur_dimension, match_value)
                 cur_dimension += 1
+                self.updatePreperiod(cur_dimension, match_value)
 
         if self.print_report_when_done:
             print(self)
 
-    def checkForMatch(self, dim, t):
+    def checkForMatch(self, t, dim):
         
-        # Input: dimensions of the slice, a tuple that specifies which dimensions each slice lives in
+        # Input: the current dimension to check,
+        #   the tuple describing the rest of the dimensions
         # Output: The first dimension of the matching cell, or -1 if no match
 
         if dim == 1:
-            check_tuple = self.setTuplePositionXtoY(self.rectangle, dim, self.preperiod[dim])
-            while check_tuple[dim] < self.rectangle[pos]:
-                if check_tuple[dim] == self.rectangle[pos]:
+            check_tuple = self.setTuplePositionXtoY(t, dim, self.preperiod[dim])
+            while check_tuple[dim] < t[dim]:
+                if self.getOutcome(check_tuple) == self.getOutcome(t):
                     return check_tuple[dim] 
+                check_tuple = self.incrementTuple(check_tuple, dim)
             return -1
 
     def fillRectangle(self, dim=-1):
@@ -123,24 +124,32 @@ class NimBase(NimTuples):
     # below are setter functions
     #
 
-    def setDimensions(self,dimensions):
-        self.dimensions = dimensions
+    def setDimensions(self, dimensions):
+        self.max_dimensions = dimensions
         self.origen = self.fillTuple((None,))
-        self.period = self.fillTuple((None,),1)
-        self.rectangle = self.origen
+        self.period = self.fillTuple((None,))
         self.preperiod = self.origen
         self.moves = self.setStandardMoves()
         self.outcomes = {}
+        if self.normal_play:
+            self.outcomes[self.origen] = 'P'
+        else:
+            self.outcomes[self.origen] = 'N'
 
     def setNormalPlay(self):
+        self.normal_play = True
         self.outcomes[self.origen] = 'P'
 
     def setMiserePlay(self):
+        self.normal_play = False
         self.outcomes[self.origen] = 'N'
+
+    def updatePreperiod(self, cur_dimension, match_value):
+        self.setTuplePositionXtoY(self.preperiod, cur_dimension, match_value)
 
     def setStandardMoves(self):
         moves = []
-        for i in range(1, self.dimensions + 1):
+        for i in range(1, self.max_dimensions + 1):
             base_tuple = self.decrementTuple( self.fillTuple((None,)) , i)
             moves.append(base_tuple)
             for j in range(1, i):
