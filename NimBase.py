@@ -26,7 +26,7 @@ class NimBase(NimTuples):
         # The moves list is populated by various setMoves functions. By default it is set
         # to setStandardMoves().
 
-        self.dimensions = 0 # The maximum number of dimensions to consider
+        self.max_dimensions = 0 # The maximum number of dimensions to consider
         self.max_depth = 100 # The max length of the rectangle in any dimension
         self.origen = ()    # The 0 vector
         self.period = ()    # The currently considered quotiant
@@ -50,12 +50,11 @@ class NimBase(NimTuples):
          
         # This function is the main loop of the program
         
-        done = False
         cur_dimension = 1   # start by looking for a pattern in dimension 1
         region_mask = self.origen # the mask tells which values of higher dimensions we are working in
 
         while not done:
-            self.explored_region = self.incrementTuple(self.explored_region, cur_dimensiion)
+            self.explored_region = self.incrementTuple(self.explored_region, cur_dimension)
             if self.checkMatch(self.explored_region, cur_dimension):
                 cur_dimension += 1
                 if cur_dimension > self.dimensions:
