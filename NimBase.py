@@ -8,7 +8,6 @@ class NimBase(NimTuples):
 # fillRectangle(self,dim)
 # getOutcome(self,t)
 # offthegrid(self,t)
-# recUpToDims(self, dim, t)
 # setDimensions(self, dimensions)
 # setNomalPlay(self)
 # setMiserePlay(self)
@@ -117,22 +116,6 @@ class NimBase(NimTuples):
                 if t[idx] == -1:
                     return True
             return False
-
-    def recUpToDims(self, dim, t):
-        #
-        # Input, the max dimension to include, and a tuple t
-        #       Note that the function begins with t, so the first few dimensions
-        #       of the given tuple t should be set to zero, if that is desired
-        #       This function does not check for that.
-        # Output: a string of every outcome inside self.rectangle
-        #       of the first dim dimensions within the higher dimensions 
-        #       specified by the input tuple t
-        s = ""
-        cur_t = t
-        while cur_t[dim] <= t[dim]:
-            s += self.outcomes[cur_t]
-            cur_t = self.incrementTupleWithCarry(cur_t)
-        return s
 
     #
     # below are setter functions
