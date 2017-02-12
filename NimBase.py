@@ -51,14 +51,14 @@ class NimBase(NimTuples):
         # This function is the main loop of the program
         
         cur_dimension = 1   # start by looking for a pattern in dimension 1
-        region_mask = self.origen # the mask tells which values of higher dimensions we are working in
+        self.rectange = self.origen
 
-        while not done:
-            self.explored_region = self.incrementTuple(self.explored_region, cur_dimension)
-            if self.checkMatch(self.explored_region, cur_dimension):
+        while cur_dimension <= self.max_dimensions:
+            self.rectangle = self.incrementTuple(self.rectangle, cur_dimension)
+            match_value = self.checkForMatch(self.explored_region, cur_dimension)
+            if match_value != -1: # -1 signals no match found
+                self.setPreperiod(cur_dimension, match_value
                 cur_dimension += 1
-                if cur_dimension > self.dimensions:
-                    done = True
 
         if self.print_report_when_done:
             print(self)
