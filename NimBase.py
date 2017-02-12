@@ -5,9 +5,8 @@ class NimBase(NimTuples):
 # This class provides the following functions:
 # __init__(self, run)
 # run(self)
-# checkDimension(self,dim)
 # fillRectangle(self,dim)
-# evaluateTuple(self,t)
+# getOutcome(self,t)
 # offthegrid(self,t)
 # recUpToDims(self, dim, t)
 # setDimensions(self, dimensions)
@@ -89,15 +88,13 @@ class NimBase(NimTuples):
             self.evaluateTuple(t)
             t = self.incrementTupleWithCarry(t)
 
-    def evaluateTuple(self,t):
-        #
+    def getOutcome(self,t):
+        
         # Input: a tuple
-        # Outpus: 'P' or 'N'
+        # Output: 'P' or 'N'
         #
-        # This function also stores the P/N value in the outcomes dictionary
-        # when it is first discovered, except when a tuple has a negative scalar,
-        # in which case it simply returns 'N'
-        #
+        # This function returns the P/N value in the outcomes dictionary, if it exists
+        # if not, it calculates it, and stores it in the outcomes dictionary and returns it
 
         if t in self.outcomes:
             return self.outcomes[t]
@@ -105,20 +102,11 @@ class NimBase(NimTuples):
                 return 'N'
         else:
             for move in self.moves:
-                if self.evaluateTuple(self.addTuples(t,move)) == 'P':
+                if self.getOutcome(self.addTuples(t,move)) == 'P':
                     self.outcomes[t] = 'N'
                     return 'N'
             self.outcomes[t] = 'P'
             return 'P'
-
-    def getOutcome(self, t):
-
-        # returns the P/N value of t
-        # if t is not set, it evaluates it first
-
-#        if t not in self.outcomes:
-#            self.evaluateTuple(t)
-        return self.outcomes(t)
 
     def offthegrid(self,t):
         #
