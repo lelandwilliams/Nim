@@ -59,8 +59,12 @@ class NimBase(NimTuples):
                 cur_dimension += 1
                 self.updatePreperiod(cur_dimension, match_value)
 
+        self.period = self.subtractTuples(self.rectangle, self.preperiod)
+
         if self.print_report_when_done:
             print(self)
+
+        return self.period
 
     def checkForMatch(self, t, dim):
         
