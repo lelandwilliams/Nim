@@ -1,2 +1,5 @@
 (done)look at evaluateTuple to see if it's return values are consistant.
-I may want to alter it.
+Go through NimTuples and add type() tests
+Split out Front End code from NimBase to a new class
+Maybe add unit tests.
+update quotiant at end of run()
