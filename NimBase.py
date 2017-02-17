@@ -50,10 +50,21 @@ class NimBase(NimTuples):
         # This function is the main loop of the program
         
         cur_dimension = 1   # start by looking for a pattern in dimension 1
-        self.rectangle = self.origen
+        self.rectangle = self.origen # and start at the beginning
 
         while cur_dimension <= self.max_dimensions:
             self.rectangle = self.incrementTuple(self.rectangle, cur_dimension)
+
+            failure_dimension = 0
+            for dim in range(1, cur_dimension):
+                if self.checkForMatch(self.rectangle, dim) == -1:
+                    failure_dimension = dim
+                    break
+            
+            if failure_dimension > 0:
+                cur_dimension = failure_dimension
+                continue
+
             match_value = self.checkForMatch(self.rectangle, cur_dimension)
             if match_value != -1: # -1 signals no match found
                 cur_dimension += 1
@@ -79,6 +90,14 @@ class NimBase(NimTuples):
                     return check_tuple[dim] 
                 check_tuple = self.incrementTuple(check_tuple, dim)
             return -1
+
+        elif dim == 2:
+            check_tuple = self.setTuplePositionXtoY(t, 1, 0)
+            check_tuple = self.setTuplePositionXtoY(t, 2, self.preperiod[2])
+            match = True
+            for x_1 in range(t[1] +1):
+                for x_2 in range(self.preperiod[2], t[2]+1):
+                    
 
     def fillRectangle(self, dim=-1):
         #
