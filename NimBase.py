@@ -53,16 +53,19 @@ class NimBase(NimTuples):
         self.rectangle = self.origen # and start at the beginning
 
         while cur_dimension <= self.max_dimensions:
+            # increment rectangle in current dimension
             self.rectangle = self.incrementTuple(self.rectangle, cur_dimension)
 
-            failure_dimension = 0
-            for dim in range(1, cur_dimension):
+            failure_dimension = 0 # remembers in which dimension a failure to find a match was found
+            # 0 indicates no failure occured
+            for dim in range(1, cur_dimension): # test all explored dimensions
                 if self.checkForMatch(self.rectangle, dim) == -1:
                     failure_dimension = dim
                     break
             
             if failure_dimension > 0:
-                cur_dimension = failure_dimension
+            # if a failure occured, start over by considering current dimension.
+                cur_dimension = failure_dimension 
                 continue
 
             match_value = self.checkForMatch(self.rectangle, cur_dimension)
@@ -95,8 +98,8 @@ class NimBase(NimTuples):
             check_tuple = self.setTuplePositionXtoY(t, 1, 0)
             check_tuple = self.setTuplePositionXtoY(t, 2, self.preperiod[2])
             match = True
-            for x_1 in range(t[1] +1):
-                for x_2 in range(self.preperiod[2], t[2]+1):
+            for x_2 in range(self.preperiod[2], t[2]+1):
+                for x_1 in range(t[1] +1):
                     
 
     def fillRectangle(self, dim=-1):
