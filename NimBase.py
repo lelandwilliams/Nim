@@ -99,6 +99,28 @@ class NimBase(NimTuples):
             match = True
             for x_2 in range(self.preperiod[2], t[2]+1):
                 for x_1 in range(t[1] +1):
+                    pass
+
+    def explore(self, dim):
+        if dim == 0:
+            self.explore(1)
+        elif dim > self.max_dimensions:
+            return None
+        else:
+            for i in range(dim + 1, self.max_dimensions + 1):
+                self.setXtoY(self.preperiod, i, 0)
+                self.setXtoY(self.rectangle, i, 0)
+            self.incrementTuple(self.preperiod, 1)
+            for i in range(self.preperiod[dim], self.rectangle[dim]+1):
+                if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]:
+                    self.preperiod[dim]=i
+                    explore(dim +1)
+                    break
+            self.explore(dim)
+
+
+
+
                     
     def getOutcome(self,t):
         
@@ -130,6 +152,8 @@ class NimBase(NimTuples):
                     return True
             return False
 
+    def verify(self, dim):
+        pass
     #
     # below are setter functions
     #
