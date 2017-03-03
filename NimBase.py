@@ -5,7 +5,6 @@ class NimBase(NimTuples):
 # This class provides the following functions:
 # __init__(self, run)
 # run(self)
-# fillRectangle(self,dim)
 # getOutcome(self,t)
 # offthegrid(self,t)
 # setDimensions(self, dimensions)
@@ -101,21 +100,6 @@ class NimBase(NimTuples):
             for x_2 in range(self.preperiod[2], t[2]+1):
                 for x_1 in range(t[1] +1):
                     
-
-    def fillRectangle(self, dim=-1):
-        #
-        # Input: number of dimensions to fill
-        # Output: none
-        #
-        # This function makes sure that every lattice point inside (inclusively)
-        # the given number of dimensions of self.rectangle has had it's outcome determined
-        # and recorded in self.outcomes
-        #
-        t = self.origen
-        while t[dim] <= self.rectangle[dim]:
-            self.evaluateTuple(t)
-            t = self.incrementTupleWithCarry(t)
-
     def getOutcome(self,t):
         
         # Input: a tuple
