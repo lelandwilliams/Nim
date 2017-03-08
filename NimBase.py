@@ -110,9 +110,9 @@ class NimBase(NimTuples):
             for i in range(dim + 1, self.max_dimensions + 1):
                 self.setXtoY(self.preperiod, i, 0)
                 self.setXtoY(self.rectangle, i, 0)
-            self.incrementTuple(self.preperiod, 1)
+            self.incrementTuple(self.rectangle, 1)
             for i in range(self.preperiod[dim], self.rectangle[dim]+1):
-                if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]:
+                if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
                     self.preperiod[dim]=i
                     explore(dim +1)
                     break
