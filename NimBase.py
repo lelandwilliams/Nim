@@ -142,6 +142,19 @@ class NimBase(NimTuples):
             self.outcomes[t] = 'P'
             return 'P'
 
+    def getSlice(dimension, value):
+        cur_tuple = self.rectangle
+        for i in range(1, dimension):
+            self.setXtoY(cur_tuple, i, 0)
+        self.setXtoY(cur_tuple, dim, value)
+        s = str()
+
+        while(cur_tuple[dim] = value):
+            s.append(self.getOutcome(cur_tuple))
+            cur_tuple = self.incrementTuple(cur_tuple)
+
+        return s
+
     def offthegrid(self,t):
         #
         # if a given tuple contains a negative scalar
