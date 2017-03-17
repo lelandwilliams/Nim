@@ -36,7 +36,7 @@ class NimBase(NimTuples):
         self.rectangle = () # The shape of the rectangle needed to work out the period, being deprecated in favor of explored_region
         self.normal_play = True    
 
-        self.setDimensions(1) # sets above parameters to 3 dimensional objects
+        self.setDimensions(3) # sets above parameters to 3 dimensional objects
         self.moves = self.setStandardMoves() # A list of the moves, according to the rules
 
         self.print_report_when_done = False
@@ -45,62 +45,8 @@ class NimBase(NimTuples):
             self.run()
     
     def run(self):
-         
-        # This function is the main loop of the program
+        self.explore(1)
         
-        cur_dimension = 1   # start by looking for a pattern in dimension 1
-        self.rectangle = self.origen # and start at the beginning
-
-        while cur_dimension <= self.max_dimensions:
-            # increment rectangle in current dimension
-            self.rectangle = self.incrementTuple(self.rectangle, cur_dimension)
-
-            failure_dimension = 0 # remembers in which dimension a failure to find a match was found
-            # 0 indicates no failure occured
-            for dim in range(1, cur_dimension): # test all explored dimensions
-                if self.checkForMatch(self.rectangle, dim) == -1:
-                    failure_dimension = dim
-                    break
-            
-            if failure_dimension > 0:
-            # if a failure occured, start over by considering current dimension.
-                cur_dimension = failure_dimension 
-                continue
-
-            match_value = self.checkForMatch(self.rectangle, cur_dimension)
-            if match_value != -1: # -1 signals no match found
-                cur_dimension += 1
-                self.updatePreperiod(cur_dimension, match_value)
-
-        self.period = self.subtractTuples(self.rectangle, self.preperiod)
-
-        if self.print_report_when_done:
-            print(self)
-
-        return self.period
-
-    def checkForMatch(self, t, dim):
-        
-        # Input: the current dimension to check,
-        #   the tuple describing the rest of the dimensions
-        # Output: The first dimension of the matching cell, or -1 if no match
-
-        if dim == 1:
-            check_tuple = self.setTuplePositionXtoY(t, dim, self.preperiod[dim])
-            while check_tuple[dim] < t[dim]:
-                if self.getOutcome(check_tuple) == self.getOutcome(t):
-                    return check_tuple[dim] 
-                check_tuple = self.incrementTuple(check_tuple, dim)
-            return -1
-
-        elif dim == 2:
-            check_tuple = self.setTuplePositionXtoY(t, 1, 0)
-            check_tuple = self.setTuplePositionXtoY(t, 2, self.preperiod[2])
-            match = True
-            for x_2 in range(self.preperiod[2], t[2]+1):
-                for x_1 in range(t[1] +1):
-                    pass
-
     def explore(self, dim):
         if dim == 0:
             self.explore(1)
@@ -110,7 +56,7 @@ class NimBase(NimTuples):
             for i in range(dim + 1, self.max_dimensions + 1):
                 self.setXtoY(self.preperiod, i, 0)
                 self.setXtoY(self.rectangle, i, 0)
-            self.incrementTuple(self.rectangle, 1)
+            self.incrementTuple(self.rectangle, dim)
             for i in range(self.preperiod[dim], self.rectangle[dim]+1):
                 if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
                     self.preperiod[dim]=i
@@ -118,10 +64,6 @@ class NimBase(NimTuples):
                     break
             self.explore(dim)
 
-
-
-
-                    
     def getOutcome(self,t):
         
         # Input: a tuple
