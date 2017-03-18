@@ -33,7 +33,7 @@ class NimBase(NimTuples):
                             # the period holds
         self.outcomes = {}  # a dictionary (key-value pair) of positions and their outcomes
                             # outcomes are either 'N' or 'P'
-        self.rectangle = () # The shape of the rectangle needed to work out the period, being deprecated in favor of explored_region
+        self.rectangle = () # The shape of the rectangle needed to work out the period
         self.normal_play = True    
 
         self.setDimensions(3) # sets above parameters to 3 dimensional objects
