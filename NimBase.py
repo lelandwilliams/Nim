@@ -53,16 +53,31 @@ class NimBase(NimTuples):
         if dim > self.max_dimensions:
             return None
 
-            for i in range(dim + 1, self.max_dimensions + 1):
-                self.setXtoY(self.preperiod, i, 0)
-                self.setXtoY(self.rectangle, i, 0)
-            self.incrementTuple(self.rectangle, dim)
+        # Zero out later dimensions of preperiod, rectangle
+        for i in range(dim + 1, self.max_dimensions + 1):
+            self.preperiod = self.setXtoY(self.preperiod, i, 0)
+            self.rectangle = self.setXtoY(self.rectangle, i, 0)
+
+        # increment rectangle in present dimension
+        self.incrementTuple(self.rectangle, dim)
+
+        # verify new value of dimemsion holds for prior
+        # dimension values
+
+        failure_dimension = self.verify(dim -1) 
+        if failure_dimension > -1:
+            self.explore(failure_dimension)
+        else:
+            match_found = False
             for i in range(self.preperiod[dim], self.rectangle[dim]+1):
                 if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
                     self.preperiod[dim]=i
-                    explore(dim +1)
+                    match_found = True
                     break
-            self.explore(dim)
+            if match_found:
+                explore(dim +1)
+            else:
+                self.explore(dim)
 
     def getOutcome(self,t):
         
@@ -74,7 +89,8 @@ class NimBase(NimTuples):
 
         if t in self.outcomes:
             return self.outcomes[t]
-        elif self.offthegrid(t):
+
+        if self.offthegrid(t):
             return 'N'
 
         for move in self.moves:
