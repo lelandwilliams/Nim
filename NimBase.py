@@ -50,9 +50,9 @@ class NimBase(NimTuples):
     def explore(self, dim):
         if dim == 0:
             self.explore(1)
-        elif dim > self.max_dimensions:
+        if dim > self.max_dimensions:
             return None
-        else:
+
             for i in range(dim + 1, self.max_dimensions + 1):
                 self.setXtoY(self.preperiod, i, 0)
                 self.setXtoY(self.rectangle, i, 0)
@@ -75,14 +75,14 @@ class NimBase(NimTuples):
         if t in self.outcomes:
             return self.outcomes[t]
         elif self.offthegrid(t):
+            return 'N'
+
+        for move in self.moves:
+            if self.getOutcome(self.addTuples(t,move)) == 'P':
+                self.outcomes[t] = 'N'
                 return 'N'
-        else:
-            for move in self.moves:
-                if self.getOutcome(self.addTuples(t,move)) == 'P':
-                    self.outcomes[t] = 'N'
-                    return 'N'
-            self.outcomes[t] = 'P'
-            return 'P'
+        self.outcomes[t] = 'P'
+        return 'P'
 
     def getSlice(dimension, value, cur_tuple = self.rectangle):
         for i in range(1, dimension):
