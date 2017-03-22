@@ -100,6 +100,11 @@ class NimBase(NimTuples):
         return 'P'
 
     def getSlice(self, dimension, value, cur_tuple = None):
+
+        # Input: dimension, the dimension of the slice we want
+        #        value: 
+        #        cur_tuple, the tuple we are pulling a slice out of. Defaults to rectangle
+
         cur_tuple = self.rectangle if cur_tuple == None else cur_tuple
 
         for i in range(1, dimension):
