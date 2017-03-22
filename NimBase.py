@@ -146,6 +146,7 @@ class NimBase(NimTuples):
         self.max_dimensions = dimensions
         self.origen = self.fillTuple((None,))
         self.period = self.fillTuple((None,))
+        self.rectangle = self.origen
         self.preperiod = self.origen
         self.moves = self.setStandardMoves()
         self.outcomes = {}
