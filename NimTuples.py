@@ -96,12 +96,15 @@ class NimTuples:
         #       the origen tuple is returned.
 
         boundary = self.rectangle if boundary == None else boundary
+
         if (t[dim] != None) and (dim < len(t) - 1):
+            t = self.incrementTuple(t, dim)
             if t[dim] == boundary[dim]: # if position is at maximum value
                 self.setTuplePositionXtoY(t, dim, 0) # set selected position to 0
                 t = self.incrementTupleWithCarry(t, dim + 1) # and increment the next position
-
-        return t
+            return t
+        else:
+            return self.origen
 
     def setTuplePositionXtoY(self, t, x, y):
         
