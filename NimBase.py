@@ -108,16 +108,16 @@ class NimBase(NimTuples):
 
         # set lower dimensions of cur_tuple to 0
         for i in range(1, dimension):
-            self.setXtoY(cur_tuple, i, 0)
+            cur_tuple = self.setXtoY(cur_tuple, i, 0)
 
-        # remember the value of the cur_tuple in the dimension. 
+        # remember the value of the cur_tuple in dimension. 
         cur_dimension_value = cur_tuple(dimension)
 
         s = str()
 
-        while(cur_tuple[dim] == value):
+        while(cur_tuple[dim] == cur_dimension_value):
             s.append(self.getOutcome(cur_tuple))
-            cur_tuple = self.incrementTuple(cur_tuple)
+            cur_tuple = self.incrementTupleWithCarry(cur_tuple)
 
         return s
 
