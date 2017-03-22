@@ -74,7 +74,7 @@ class NimBase(NimTuples):
         # see if new value of rectangle matches an earlier value
         for i in range(self.preperiod[dim], self.rectangle[dim]+1):
             if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
-                self.preperiod[dim]=i
+                self.preperiod[dim] = i
                 return explore(dim + 1)
         return self.explore(dim)
 
@@ -117,7 +117,7 @@ class NimBase(NimTuples):
         #
         # if a given tuple contains a negative scalar
         # return True, else return False
-        #
+        
             for idx in range(len(t)):
                 if t[idx] == -1:
                     return True
@@ -128,11 +128,16 @@ class NimBase(NimTuples):
         # Input: test_dim, the dimension of self.rectangle in which we are currently checking
         # Output: -1 if no error found, or test_dim if an error found
 
-        return_value = -1 
+        assert test_dim >= 0
+
         if test_dim == 0: # the recursion 'base case'
             return -1 # -1 indicates all values pass
 
-
+        # test prior dimensions before this one
+        # if an error is round, return
+        return_value = self.verify(test_dim -1) 
+        if return_value != -1:
+            return return_value
        
         # setup test_tuples.
         # rectangle_test_tuple is set to rectangle, with all the 
