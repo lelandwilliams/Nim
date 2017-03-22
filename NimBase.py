@@ -61,7 +61,7 @@ class NimBase(NimTuples):
         self.rectangle = self.incrementTupleWithCarry(self.rectangle, dim)
 
         # make sure rectangle has not overrun preset maximum in the current dimension
-        if self.max_depth > 0 and self.rectangle[dim] > max_depth:
+        if self.max_depth > 0 and self.rectangle[dim] > self.max_depth:
             print("\n Error: self.rectangle in dimension %d has exceeded maximum depth of %d", dim, max_depth)
             return False
 
