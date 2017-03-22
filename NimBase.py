@@ -123,16 +123,16 @@ class NimBase(NimTuples):
                     return True
             return False
 
-    def verify(self, test_dim, set_dim):
+    def verify(self, test_dim):
 
         # Input: test_dim, the dimension of self.rectangle in which we are currently checking
-        #        set_dim
-
         # Output: -1 if no error found, or test_dim if an error found
 
-        return_value = -1 # -1 indicates all values pass
+        return_value = -1 
         if test_dim == 0: # the recursion 'base case'
-            return return_value
+            return -1 # -1 indicates all values pass
+
+
        
         # setup test_tuples.
         # rectangle_test_tuple is set to rectangle, with all the 
