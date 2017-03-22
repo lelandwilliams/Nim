@@ -73,6 +73,8 @@ class NimTuples:
         #         dim, the dimension to increment
         # output: a new tuple identical to the old, except that it has been incremented.
 
+        assert dim < len(t)
+
         new_t = tuple()
         for i in range(len(t)):
             if t[i] == None:
