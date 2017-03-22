@@ -65,17 +65,16 @@ class NimBase(NimTuples):
             print("\nError: self.rectangle in dimension {} has exceeded maximum depth of {}".format( dim, self.max_depth))
             return False
 
-        # verify new value of dimemsion holds for prior
-        # dimension values
+        # verify preperiod and period still holds for new value of rectangle
         failure_dimension = self.verify(dim -1) 
         if failure_dimension > -1:
             return self.explore(failure_dimension)
-        else:
-            for i in range(self.preperiod[dim], self.rectangle[dim]+1):
-                if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
-                    self.preperiod[dim]=i
-                    return explore(dim + 1)
-            return self.explore(dim)
+
+        for i in range(self.preperiod[dim], self.rectangle[dim]+1):
+            if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
+                self.preperiod[dim]=i
+                return explore(dim + 1)
+        return self.explore(dim)
 
     def getOutcome(self,t):
         
