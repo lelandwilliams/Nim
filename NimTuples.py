@@ -106,6 +106,8 @@ class NimTuples:
                 t = self.incrementTupleWithCarry(t, dim + 1) # and increment the next position
             return t
         else:
+            try: self.origen
+            except: self.origen = (None,)
             return self.origen
 
     def setTuplePositionXtoY(self, t, x, y):
