@@ -102,14 +102,17 @@ class NimBase(NimTuples):
     def getSlice(self, dimension, value, cur_tuple = None):
 
         # Input: dimension, the dimension of the slice we want
-        #        value: 
         #        cur_tuple, the tuple we are pulling a slice out of. Defaults to rectangle
 
         cur_tuple = self.rectangle if cur_tuple == None else cur_tuple
 
+        # set lower dimensions of cur_tuple to 0
         for i in range(1, dimension):
             self.setXtoY(cur_tuple, i, 0)
-        self.setXtoY(cur_tuple, dim, value)
+
+        # remember the value of the cur_tuple in the dimension. 
+        cur_dimension_value = cur_tuple(dimension)
+
         s = str()
 
         while(cur_tuple[dim] == value):
