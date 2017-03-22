@@ -67,21 +67,15 @@ class NimBase(NimTuples):
 
         # verify new value of dimemsion holds for prior
         # dimension values
-
         failure_dimension = self.verify(dim -1) 
         if failure_dimension > -1:
-            self.explore(failure_dimension)
+            return self.explore(failure_dimension)
         else:
-            match_found = False
             for i in range(self.preperiod[dim], self.rectangle[dim]+1):
                 if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
                     self.preperiod[dim]=i
-                    match_found = True
-                    break
-            if match_found:
-                explore(dim +1)
-            else:
-                self.explore(dim)
+                    return explore(dim + 1)
+            return self.explore(dim)
 
     def getOutcome(self,t):
         
