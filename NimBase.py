@@ -114,9 +114,10 @@ class NimBase(NimTuples):
         return s
 
     def offthegrid(self,t):
-        #
-        # if a given tuple contains a negative scalar
-        # return True, else return False
+ 
+        # Input: t, a tuple
+        # Output: True if t contains a negative scalar
+        #         False otherwise
         
             for idx in range(len(t)):
                 if t[idx] == -1:
