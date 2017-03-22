@@ -51,7 +51,7 @@ class NimBase(NimTuples):
         if dim == 0:
             return self.explore(1)
         if dim > self.max_dimensions:
-            return None
+            return True
 
         # Zero out later dimensions of preperiod, rectangle
         self.preperiod = self.zeroHigherDimensions(self.preperiod, dim)
