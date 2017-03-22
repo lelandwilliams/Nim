@@ -98,13 +98,15 @@ class NimBase(NimTuples):
         self.outcomes[t] = 'P'
         return 'P'
 
-    def getSlice(dimension, value, cur_tuple = self.rectangle):
+    def getSlice(self, dimension, value, cur_tuple = None):
+        cur_tuple = self.rectangle if cur_tuple == None else cur_tuple
+
         for i in range(1, dimension):
             self.setXtoY(cur_tuple, i, 0)
         self.setXtoY(cur_tuple, dim, value)
         s = str()
 
-        while(cur_tuple[dim] = value):
+        while(cur_tuple[dim] == value):
             s.append(self.getOutcome(cur_tuple))
             cur_tuple = self.incrementTuple(cur_tuple)
 
@@ -125,15 +127,15 @@ class NimBase(NimTuples):
         if test_dim == 0: # the recursion 'base case'
             return return_value
        
-       # setup test_tuples.
-       # rectangle_test_tuple is set to rectangle, with all the 
-       # dimensions up to set_dim zeroed out
-       test_tuple = self.rectangle
-       for i in range(1, set_dim):
+        # setup test_tuples.
+        # rectangle_test_tuple is set to rectangle, with all the 
+        # dimensions up to set_dim zeroed out
+        test_tuple = self.rectangle
+        for i in range(1, set_dim):
            self.setTupleXtoY(test_tuple, i, 1)
-       self.setTupleXtoY(rectangle_test, test_dim, self.rectangle[test_dim])
+        self.setTupleXtoY(rectangle_test, test_dim, self.rectangle[test_dim])
 
-       while(rectangle_test_tuple[set_dim] == self.rectangle[set_dim]):
+        while(rectangle_test_tuple[set_dim] == self.rectangle[set_dim]):
            preperiod_test_tuple = self.setTupleXtoY(test_tuple, self.preperiod[test_dim])
 
     #
