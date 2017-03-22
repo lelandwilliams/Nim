@@ -49,7 +49,7 @@ class NimBase(NimTuples):
         
     def explore(self, dim):
         if dim == 0:
-            self.explore(1)
+            return self.explore(1)
         if dim > self.max_dimensions:
             return None
 
