@@ -26,7 +26,8 @@ class NimBase(NimTuples):
         # to setStandardMoves().
 
         self.max_dimensions = 0 # The maximum number of dimensions to consider
-        self.max_depth = 100 # The max length of the rectangle in any dimension
+        self.max_depth = 100 # The maximum allowed size of the rectangle in any dimension
+                            # if max_depth is set to 0, then dimensions can be infinite
         self.origen = ()    # The 0 vector
         self.period = ()    # The currently considered quotiant
         self.preperiod = () # The lowest position in each dimension for which
@@ -34,7 +35,7 @@ class NimBase(NimTuples):
         self.outcomes = {}  # a dictionary (key-value pair) of positions and their outcomes
                             # outcomes are either 'N' or 'P'
         self.rectangle = () # The shape of the rectangle needed to work out the period
-        self.normal_play = True    
+        self.normal_play = True
 
         self.setDimensions(3) # sets above parameters to 3 dimensional objects
         self.moves = self.setStandardMoves() # A list of the moves, according to the rules
@@ -70,6 +71,7 @@ class NimBase(NimTuples):
         if failure_dimension > -1:
             return self.explore(failure_dimension)
 
+        # see if new value of rectangle matches an earlier value
         for i in range(self.preperiod[dim], self.rectangle[dim]+1):
             if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
                 self.preperiod[dim]=i
@@ -122,6 +124,12 @@ class NimBase(NimTuples):
             return False
 
     def verify(self, test_dim, set_dim):
+
+        # Input: test_dim, the dimension of self.rectangle in which we are currently checking
+        #        set_dim
+
+        # Output: -1 if no error found, or test_dim if an error found
+
         return_value = -1 # -1 indicates all values pass
         if test_dim == 0: # the recursion 'base case'
             return return_value
