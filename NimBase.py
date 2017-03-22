@@ -54,9 +54,8 @@ class NimBase(NimTuples):
             return None
 
         # Zero out later dimensions of preperiod, rectangle
-        for i in range(dim + 1, self.max_dimensions + 1):
-            self.preperiod = self.setXtoY(self.preperiod, i, 0)
-            self.rectangle = self.setXtoY(self.rectangle, i, 0)
+        self.preperiod = self.zeroHigherDimensions(self.preperiod, dim)
+        self.rectangle = self.zeroHigherDimensions(self.rectangle, dim)
 
         # increment rectangle in present dimension
         self.incrementTuple(self.rectangle, dim)
