@@ -8,6 +8,7 @@ class NimTuples:
 # incrementTuple(self,t,pos)
 # incrementTupleWithCarry(self,t,pos)
 # setTuplePositionXtoY(self,t,x,y)
+# zeroHigherDimensions(self,t,dim)
 
     def addTuples(self,t1,t2):
         
@@ -66,17 +67,17 @@ class NimTuples:
             t += fill,
         return t
 
-    def incrementTuple(self,t, pos = 1):
+    def incrementTuple(self,t, dim = 1):
 
-        # this function takes in a tuple and a dimension,
-        # and returns the tuple but with the value in the given
-        # position incremented by 1.
+        # Inputs: t, a tuple
+        #         dim, the dimension to increment
+        # output: a new tuple identical to the old, except that it has been incremented.
 
         new_t = tuple()
         for i in range(len(t)):
             if t[i] == None:
                 new_t += None,
-            elif i == pos:
+            elif i == dim:
                 new_t += t[i] + 1,
             else:
                 new_t += t[i],
@@ -84,17 +85,21 @@ class NimTuples:
         return new_t
 
 
-    def incrementTupleWithCarry(self,t,pos = 1):
+    def incrementTupleWithCarry(self, t, dim = 1, boundary = None):
         
-        # Input: a tuple, t & the position to increment (defaults to 1)
+        # Input: t, a tuple
+        #        dim, the dimension to increment (defaults to 1)
+        #        boundary, the tuple of maximum dimensions. If not specified, is set to self.rectangle
+
         # Output: the incremented tuple, with values of the boundary 'carried' to the next level
         #       unless the value of the position is None, or the Tuple is maxed out, in which cases
-        #       the original tuple is returned.
+        #       the origen tuple is returned.
 
-        if (t[pos] != None) and (pos < len(t) - 1):
-            if t[pos] == self.explored_region[pos]: # if position is at maximum value
-                self.TuplePositionXtoY(t, pos, 0) # set selected position to 0
-                t = self.incrementTupleWithCarry(t,pos + 1) # and increment the next position
+        boundary = self.rectangle if boundary == None else boundary
+        if (t[dim] != None) and (dim < len(t) - 1):
+            if t[dim] == boundary[dim]: # if position is at maximum value
+                self.TuplePositionXtoY(t, dim, 0) # set selected position to 0
+                t = self.incrementTupleWithCarry(t, dim + 1) # and increment the next position
 
         return t
 
@@ -110,6 +115,20 @@ class NimTuples:
                 new_t += (y,)
             else:
                 new_t += (t[i],)
+        return new_t
+
+    def zeroHigherDimensions(self,t,dim):
+
+        # Inputs: t, a tuple
+        #         dim, the dimension above which the tuple should be zeroed
+        # output: a new tuple identical to the old, except that it has been zeroed.
+
+        new_t = tuple()
+        for i in range(len(t)):
+            if i <= dim:
+                new_t += t[i],
+            else:
+                new_t += 0,
         return new_t
 
 
