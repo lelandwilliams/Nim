@@ -74,7 +74,7 @@ class NimBase(NimTuples):
         # see if new value of rectangle matches an earlier value
         for i in range(self.preperiod[dim], self.rectangle[dim]+1):
             if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
-                self.preperiod[dim] = i
+                self.updatePreperiod(dim, i)
                 return explore(dim + 1)
         return self.explore(dim)
 
