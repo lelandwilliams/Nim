@@ -117,12 +117,14 @@ class NimTuples:
         # output: a tuple that is identical to the input tuple, with the exception
         #   that it's xth position has been changed to y
     
-        new_t = ()
+        new_t = tuple()
         for i in range(len(t)):
             if i == x:
                 new_t += (y,)
             else:
-                new_t += (t[i],)
+                new_t += t[i],
+
+        assert type(new_t) == type(tuple())
         return new_t
 
     def zeroHigherDimensions(self,t,dim):
