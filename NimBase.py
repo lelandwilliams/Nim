@@ -111,12 +111,12 @@ class NimBase(NimTuples):
             cur_tuple = self.setXtoY(cur_tuple, i, 0)
 
         # remember the value of the cur_tuple in dimension. 
-        cur_dimension_value = cur_tuple(dimension)
+        cur_dimension_value = cur_tuple[dimension]
 
         s = str()
 
-        while(cur_tuple[dim] == cur_dimension_value):
-            s.append(self.getOutcome(cur_tuple))
+        while(cur_tuple[dimension] == cur_dimension_value):
+            s += (self.getOutcome(cur_tuple))
             cur_tuple = self.incrementTupleWithCarry(cur_tuple)
 
         return s
