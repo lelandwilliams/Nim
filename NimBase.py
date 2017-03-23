@@ -108,7 +108,7 @@ class NimBase(NimTuples):
 
         # set lower dimensions of cur_tuple to 0
         for i in range(1, dimension):
-            cur_tuple = self.setXtoY(cur_tuple, i, 0)
+            cur_tuple = self.setTupleXtoY(cur_tuple, i, 0)
 
         # remember the value of the cur_tuple in dimension. 
         cur_dimension_value = cur_tuple[dimension]
