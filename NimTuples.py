@@ -14,13 +14,14 @@ class NimTuples:
         
         # returns a new tuple constructed
         # by component-wise addition from the two input tuples
-        
+        assert len(t1) == len(t2)
+
         t = tuple()
         for i in range(0, len(t1)):
             if t1[i] == None:
                 t += None,
             else:
-                t += t1[i] + t2[i],
+                t += (t1[i] + t2[i]),
         return t
 
     def subtractTuples(self,t1,t2):
