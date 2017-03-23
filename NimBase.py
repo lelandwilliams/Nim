@@ -73,7 +73,8 @@ class NimBase(NimTuples):
 
         # see if new value of rectangle matches an earlier value
         for i in range(self.preperiod[dim], self.rectangle[dim]+1):
-            if self.getSlice(dim, i) == self.getSlice(dim, self.rectangle[dim]):
+            t = self.setTuplePositionXtoY(self.rectangle, dim, i)
+            if self.getSlice(dim, t) == self.getSlice(dim, self.rectangle[dim]):
                 self.updatePreperiod(dim, i)
                 return explore(dim + 1)
         return self.explore(dim)
@@ -105,10 +106,11 @@ class NimBase(NimTuples):
         #        cur_tuple, the tuple we are pulling a slice out of. Defaults to rectangle
 
         cur_tuple = self.rectangle if cur_tuple == None else cur_tuple
+        assert type(cur_tuple) == type(tuple())
 
         # set lower dimensions of cur_tuple to 0
         for i in range(1, dimension):
-            cur_tuple = self.setTupleXtoY(cur_tuple, i, 0)
+            cur_tuple = self.setTuplePositionXtoY(cur_tuple, i, 0)
 
         # remember the value of the cur_tuple in dimension. 
         cur_dimension_value = cur_tuple[dimension]
