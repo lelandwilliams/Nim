@@ -116,6 +116,10 @@ class NimBase(NimTuples):
         # remember the value of the cur_tuple in dimension. 
         cur_dimension_value = cur_tuple[dimension]
 
+        # prevent infinite loop that happens when testing lowest dimension
+        if dimension == 1:
+            return self.getOutcome(cur_tuple)
+
         s = str()
 
         while(cur_tuple[dimension] == cur_dimension_value):
