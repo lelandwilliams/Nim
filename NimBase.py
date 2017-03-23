@@ -67,12 +67,12 @@ class NimBase(NimTuples):
             return False
 
         # verify preperiod and period still holds for new value of rectangle
-        failure_dimension = self.verify(dim -1) 
-        if failure_dimension > -1:
+        failure_dimension = self.verify(dim - 1) 
+        if failure_dimension != -1:
             return self.explore(failure_dimension)
 
         # see if new value of rectangle matches an earlier value
-        for i in range(self.preperiod[dim], self.rectangle[dim]+1):
+        for i in range(self.preperiod[dim], self.rectangle[dim]):
             t = self.setTuplePositionXtoY(self.rectangle, dim, i)
             if self.getSlice(dim, t) == self.getSlice(dim, self.rectangle[dim]):
                 self.updatePreperiod(dim, i)
@@ -105,6 +105,7 @@ class NimBase(NimTuples):
         # Input: dimension, the dimension of the slice we want
         #        cur_tuple, the tuple we are pulling a slice out of. Defaults to rectangle
 
+        assert cur_tuple == None or type(cur_tuple) == type(tuple())
         cur_tuple = self.rectangle if cur_tuple == None else cur_tuple
         assert type(cur_tuple) == type(tuple())
 
