@@ -150,7 +150,7 @@ class NimBase(NimTuples):
             return -1 # -1 indicates all values pass
 
         # test prior dimensions before this one
-        # if an error is round, return
+        # if an error is found, return
         return_value = self.verify(test_dim -1) 
         if return_value != -1:
             return return_value
@@ -160,11 +160,11 @@ class NimBase(NimTuples):
         # dimensions up to set_dim zeroed out
         test_tuple = self.rectangle
         for i in range(1, set_dim):
-           self.setTupleXtoY(test_tuple, i, 1)
-        self.setTupleXtoY(rectangle_test, test_dim, self.rectangle[test_dim])
+           test_tuple = self.setTupleXtoY(test_tuple, i, 0)
+        test_tuple = self.setTupleXtoY(test_tuple, test_dim, self.rectangle[test_dim])
 
-        while(rectangle_test_tuple[set_dim] == self.rectangle[set_dim]):
-           preperiod_test_tuple = self.setTupleXtoY(test_tuple, self.preperiod[test_dim])
+        while(test_tuple[set_dim] == self.rectangle[set_dim]):
+           test_tuple = self.setTupleXtoY(test_tuple, self.preperiod[test_dim])
 
     #
     # below are setter functions
