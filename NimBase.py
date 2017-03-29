@@ -157,9 +157,9 @@ class NimBase(NimTuples):
        
         # setup test_tuples.
         # rectangle_test_tuple is set to rectangle, with all the 
-        # dimensions up to set_dim zeroed out
+        # dimensions up to test_dim zeroed out
         test_tuple = self.rectangle
-        for i in range(1, set_dim):
+        for i in range(1, test_dim):
            test_tuple = self.setTupleXtoY(test_tuple, i, 0)
         test_tuple = self.setTupleXtoY(test_tuple, test_dim, self.rectangle[test_dim])
 
