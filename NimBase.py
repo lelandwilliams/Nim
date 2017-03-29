@@ -155,16 +155,16 @@ class NimBase(NimTuples):
         if return_value != -1:
             return return_value
        
-        # setup test_tuples.
         # rectangle_test_tuple is set to rectangle, with all the 
         # dimensions up to test_dim zeroed out
         test_tuple = self.rectangle
         for i in range(1, test_dim):
            test_tuple = self.setTuplePositionXtoY(test_tuple, i, 0)
-        test_tuple = self.setTuplePositionXtoY(test_tuple, test_dim, self.rectangle[test_dim])
+        # set test_tuple to have the same value in test_dim as self.preperiod
+        test_tuple = self.setTuplePositionXtoY(test_tuple, test_dim, self.preperiod[test_dim])
 
-        while(test_tuple[set_dim] == self.rectangle[set_dim]):
-           test_tuple = self.setTuplePositionXtoY(test_tuple, self.preperiod[test_dim])
+        if self.getSlice(test_dim,test_tuple) != self.getSlice(test_dim,self.rectangle:
+            return test_dim
 
     #
     # below are setter functions
