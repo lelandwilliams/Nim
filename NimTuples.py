@@ -102,7 +102,7 @@ class NimTuples:
 
         if (dim < len(t)) and (t[dim] != None) :
             t = self.incrementTuple(t, dim)
-            if t[dim] == boundary[dim]: # if position is at maximum value
+            if t[dim] > boundary[dim]: # if position is beyond maximum value
                 t = self.setTuplePositionXtoY(t, dim, 0) # set selected position to 0
                 t = self.incrementTupleWithCarry(t, dim + 1) # and increment the next position
             return t
