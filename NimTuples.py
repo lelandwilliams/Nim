@@ -100,7 +100,7 @@ class NimTuples:
 
         boundary = self.rectangle if boundary == None else boundary
 
-        if (t[dim] != None) and (dim < len(t)):
+        if (dim < len(t)) and (t[dim] != None) :
             t = self.incrementTuple(t, dim)
             if t[dim] == boundary[dim]: # if position is at maximum value
                 t = self.setTuplePositionXtoY(t, dim, 0) # set selected position to 0
