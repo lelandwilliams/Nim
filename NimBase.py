@@ -160,11 +160,11 @@ class NimBase(NimTuples):
         # dimensions up to test_dim zeroed out
         test_tuple = self.rectangle
         for i in range(1, test_dim):
-           test_tuple = self.setTupleXtoY(test_tuple, i, 0)
-        test_tuple = self.setTupleXtoY(test_tuple, test_dim, self.rectangle[test_dim])
+           test_tuple = self.setTuplePositionXtoY(test_tuple, i, 0)
+        test_tuple = self.setTuplePositionXtoY(test_tuple, test_dim, self.rectangle[test_dim])
 
         while(test_tuple[set_dim] == self.rectangle[set_dim]):
-           test_tuple = self.setTupleXtoY(test_tuple, self.preperiod[test_dim])
+           test_tuple = self.setTuplePositionXtoY(test_tuple, self.preperiod[test_dim])
 
     #
     # below are setter functions
