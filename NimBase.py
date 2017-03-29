@@ -164,7 +164,7 @@ class NimBase(NimTuples):
         # set test_tuple to have the same value in test_dim as self.preperiod
         test_tuple = self.setTuplePositionXtoY(test_tuple, test_dim, self.preperiod[test_dim])
 
-        if self.getSlice(test_dim,test_tuple) != self.getSlice(test_dim,self.rectangle:
+        if self.getSlice(test_dim,test_tuple) != self.getSlice(test_dim,self.rectangle):
             return_value = test_dim
         return return_value
 
