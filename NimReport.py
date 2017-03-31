@@ -94,7 +94,7 @@ class NimReport(NimBase):
             if c[1] == 0 and len(text) > 0:
                 text+= "\n"
 
-            if (c[1] == 0) and c[2] == 0:
+            if (c[1] == 0) and (len(c) <= 2 or c[2] == 0):
                 if len(text) > 0:
                     text += "\n"
                 text += self.printGridHeader(c)
