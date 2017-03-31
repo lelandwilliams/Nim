@@ -62,7 +62,7 @@ class NimReport(NimBase):
             return "No dimensions to report\n"
 
         cur_t = self.origen
-        if max_dimensions == 1: 
+        if max_dimension == 1: 
             text = ""
             for i in range(self.report_boundary[1]):
                 text += self.getOutcome[cur_t] + " "
