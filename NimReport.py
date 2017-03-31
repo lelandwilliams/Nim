@@ -69,7 +69,7 @@ class NimReport(NimBase):
                 cur_t = self.incrementTuple(cur_t,1)
             return text
         else:
-            return self.printGrid(cur_t)
+            return self.printGrid()
 
     def printGridHeader(self,c):
         line = str()
@@ -80,26 +80,34 @@ class NimReport(NimBase):
         line += "\n"
         return line
 
-    def printGrid(self):
+    def printGrid(self, truncate = False):
 
         # Helper function for reportGrids() for when the tuple has more than 1 dimension
+        # The truncate parameter tells the function to  
+        # not display values at the outer limit of rectangle
 
         text = ""
         c = self.origen
-        text += printGridHeader(c)
+        quitting_time = False
 
-        while t[-1] <= self.rectangle[-1]:
-            if (t[1] == 0) and t[1] == 0:
-                text += "\n\n"
-                for dim in range(2,self.max_dimensions):
-                    text += "x_" + str(dim +1) + " = " + str(t[dim]) + ";  "
-                text += "\n "
-                for i in range(self.rectangle[1] +1):
-                    text+= " " + str(i) 
-            if t[1] == 0:
-                text+= "\n" + str(t[1]) + " "
+        while not quitting_time:
+            if c[1] == 0 and len(text) > 0:
+                text+= "\n"
 
-            text+= self.outcomes[t] + " "
-            t = self.incrementTupleWithCarry(t)
+            if (c[1] == 0) and c[2] == 0:
+                if len(text) > 0:
+                    text += "\n"
+                text += self.printGridHeader(c)
+
+            text += self.getOutcome(c) + " "
+            c = self.incrementTupleWithCarry(c)
+
+            if truncate:
+                for i in range(1, len(self.rectangle)):
+                    if c[i] == self.rectangle[i]:
+                        c = self.incrementTupleWithCarry(c, i)
+
+            if c == self.origen:
+                quitting_time = True
         return text
 
