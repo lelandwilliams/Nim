@@ -29,7 +29,6 @@ class NimBase(NimTuples):
         self.max_depth = 100 # The maximum allowed size of the rectangle in any dimension
                             # if max_depth is set to 0, then dimensions can be infinite
         self.origen = ()    # The 0 vector
-        self.period = ()    # The currently considered quotiant
         self.preperiod = () # The lowest position in each dimension for which
                             # the period holds
         self.outcomes = {}  # a dictionary (key-value pair) of positions and their outcomes
@@ -139,6 +138,19 @@ class NimBase(NimTuples):
                     return True
             return False
 
+    def period(self):
+
+        # calculates the period from rectangle and preperiod
+
+        t = self.origen
+        for i in range(len(self.rectangle)):
+            if self.rectangle[i] == None or self.preperiod[i] == None:
+                t = self.setTuplePositionXtoY(t, i, None)
+            else:
+                t = self.setTuplePositionXtoY(t, i, 
+                        (self.rectangle[i] - self.preperiod[i]))
+        return t
+
     def verify(self, test_dim):
 
         # Input: test_dim, the dimension of self.rectangle in which we are currently checking
@@ -175,7 +187,6 @@ class NimBase(NimTuples):
     def setDimensions(self, dimensions):
         self.max_dimensions = dimensions
         self.origen = self.fillTuple((None,))
-        self.period = self.fillTuple((None,))
         self.rectangle = self.origen
         self.preperiod = self.origen
         self.moves = self.setStandardMoves()

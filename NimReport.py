@@ -38,7 +38,7 @@ class NimReport(NimBase):
             text = 'Play: \t\tStandard Play\n'
         else:
             text = "Play: \t\tMisere Play\n"
-        text += 'Period: \t' + str(self.period) + '\n'
+        text += 'Period: \t' + str(self.period()) + '\n'
         text += 'Preperiod: \t' + str(self.preperiod) + '\n'
         text += 'Moves: \t\t' 
         for i in range(0, len(self.moves)):
