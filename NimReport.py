@@ -20,7 +20,7 @@ class NimReport(NimBase):
             if k == 'P':
                 flag = True
                 for i in range(1, len(self.rectangle)):
-                    if j[i] == self.rectangle[i]:
+                    if j[i] >= self.rectangle[i]:
                         flag = False
                 if flag:
                     position_list.append(j)
