@@ -1,4 +1,4 @@
-from NimBase.py import NimBase
+from NimBase import NimBase
 
 class NimReport(NimBase):
 
@@ -13,6 +13,18 @@ class NimReport(NimBase):
 
     def __repr__(self):
             return self.report()
+
+    def p_positions(self):
+        position_list = list()
+        for j,k in self.outcomes.items():
+            if k == 'P':
+                flag = True
+                for i in range(1, len(self.rectangle)):
+                    if j[i] == self.rectangle[i]:
+                        flag = False
+                if flag:
+                    position_list.append(j)
+        return position_list
 
     def report(self):
 
@@ -32,12 +44,14 @@ class NimReport(NimBase):
         text += 'Rectangle: \t' + str(self.rectangle) + '\n'
         return text
 
-    def reportGrids(self, report_boundary = self.boundary):
+    def reportGrids(self, report_boundary = None):
 
         # Input: report_boundary, a tuple representing the boundary of you wish to print
         #
         # Output: a string containg the values of self.outcomes
         #   arranged in grids
+
+        report_boundary = self.rectangle if report_boundary == None else report_boundary
         
         max_dimension = 0 # see how many dimensions the boundary tuple contains
         for i in range(len(report_boundary)):
