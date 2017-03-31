@@ -28,7 +28,7 @@ class NimReport(NimBase):
 
     def report(self):
 
-        return self.report_parameters() + self.reportGrids()
+        return self.report_parameters() + self.printGrid()
 
     def report_parameters(self):
 
@@ -40,8 +40,14 @@ class NimReport(NimBase):
             text = "Play: \t\tMisere Play\n"
         text += 'Period: \t' + str(self.period) + '\n'
         text += 'Preperiod: \t' + str(self.preperiod) + '\n'
-        text += 'Moves: \t\t' + str(self.moves) + '\n'
-        text += 'Rectangle: \t' + str(self.rectangle) + '\n'
+        text += 'Moves: \t\t' 
+        for i in range(0, len(self.moves)):
+                if i>0:
+                    text += ", "
+                if i>0 and i%2 == 0:
+                    text += "\n\t\t"
+                text += str(self.moves[i])
+        text += '\nRectangle: \t' + str(self.rectangle) + '\n\n'
         return text
 
     def reportGrids(self, report_boundary = None):
