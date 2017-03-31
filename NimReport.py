@@ -71,20 +71,32 @@ class NimReport(NimBase):
         else:
             return self.printGrid(cur_t)
 
-    def printGrid(self, t):
+    def printGridHeader(self,c):
+        line = str()
+        for i in range(3, len(c)):
+            if len(line) > 0:
+                line+=", "
+            line += "x_{} = {}".format(i, c[i])
+        line += "\n"
+        return line
+
+    def printGrid(self):
 
         # Helper function for reportGrids() for when the tuple has more than 1 dimension
 
         text = ""
+        c = self.origen
+        text += printGridHeader(c)
+
         while t[-1] <= self.rectangle[-1]:
-            if (t[0] == 0) and t[1] == 0:
+            if (t[1] == 0) and t[1] == 0:
                 text += "\n\n"
-                for dim in range(2,self.dimensions):
+                for dim in range(2,self.max_dimensions):
                     text += "x_" + str(dim +1) + " = " + str(t[dim]) + ";  "
                 text += "\n "
-                for i in range(self.rectangle[0] +1):
+                for i in range(self.rectangle[1] +1):
                     text+= " " + str(i) 
-            if t[0] == 0:
+            if t[1] == 0:
                 text+= "\n" + str(t[1]) + " "
 
             text+= self.outcomes[t] + " "
