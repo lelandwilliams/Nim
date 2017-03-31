@@ -194,7 +194,7 @@ class NimBase(NimTuples):
         self.outcomes[self.origen] = 'N'
 
     def updatePreperiod(self, cur_dimension, match_value):
-        self.setTuplePositionXtoY(self.preperiod, cur_dimension, match_value)
+        self.preperiod = self.setTuplePositionXtoY(self.preperiod, cur_dimension, match_value)
 
     def setStandardMoves(self):
         moves = []
