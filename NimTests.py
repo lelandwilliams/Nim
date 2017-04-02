@@ -35,22 +35,33 @@ class TestNim(unittest.TestCase):
         self.nim.setMiserePlay()
         self.nim.setDimensions(3)
         self.nim.run()
-        self.assertEqual(len(self.nim.p_positions()), 4)
+        self.assertEqual(len(self.nim.p_positions()), 5)
         self.assertTrue((None,1,0,0) in self.nim.p_positions())
         self.assertTrue((None,0,2,0) in self.nim.p_positions())
         self.assertTrue((None,0,0,1) in self.nim.p_positions())
         self.assertTrue((None,0,2,1) in self.nim.p_positions())
+        self.assertTrue((None,2,1,1) in self.nim.p_positions())
         self.assertEqual(self.nim.rectangle, (None,2,3,2))
         self.assertEqual(self.nim.preperiod, (None,0,1,1))
         self.assertEqual(self.nim.period(), (None,2,2,1))
 
-def example4():
-    a = Nim
-    a.setMiserePlay()
-    a.setDimensions(3)
-    a.moves = [(None,-1,0,0,0),(None,0,-1,0,0),(None,1,-1,0,0),(None,0,1,-1,0),(None,1,0,0,0),(None,0,0,1,-1)]
-    a.run()
-    return a
+    def test_example4(self):
+        self.nim.setMiserePlay()
+        self.nim.setDimensions(4)
+        self.nim.moves = [(None,-1,0,0,0),(None,0,-1,0,0),(None,1,-1,0,0),(None,0,1,-1,0),(None,1,0,0,-1),(None,0,0,1,-1)]
+        self.nim.run()
+        self.assertEqual(len(self.nim.p_positions()), 8)
+        self.assertTrue((None,1,0,0,0) in self.nim.p_positions())
+        self.assertTrue((None,0,2,0,0) in self.nim.p_positions())
+        self.assertTrue((None,0,0,1,0) in self.nim.p_positions())
+        self.assertTrue((None,0,2,1,0) in self.nim.p_positions())
+        self.assertTrue((None,1,0,0,1) in self.nim.p_positions())
+        self.assertTrue((None,0,3,0,1) in self.nim.p_positions())
+        self.assertTrue((None,0,1,1,1) in self.nim.p_positions())
+        self.assertTrue((None,0,3,1,1) in self.nim.p_positions())
+        self.assertEqual(self.nim.rectangle, (None,2,4,2,2))
+        self.assertEqual(self.nim.preperiod, (None,0,2,1,0))
+        self.assertEqual(self.nim.period(), (None,2,2,1,2))
 
 if __name__=='__main__':
     unittest.main()
