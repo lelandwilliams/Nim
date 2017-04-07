@@ -38,12 +38,12 @@ class TestNim(unittest.TestCase):
         self.assertEqual(len(self.nim.p_positions()), 5)
         self.assertTrue((None,1,0,0) in self.nim.p_positions())
         self.assertTrue((None,0,2,0) in self.nim.p_positions())
-        self.assertTrue((None,0,0,1) in self.nim.p_positions())
-        self.assertTrue((None,0,2,1) in self.nim.p_positions())
-        self.assertTrue((None,2,1,1) in self.nim.p_positions())
-        self.assertEqual(self.nim.rectangle, (None,2,3,2))
+        self.assertTrue((None,1,1,1) in self.nim.p_positions())
+        self.assertTrue((None,0,0,2) in self.nim.p_positions())
+        self.assertTrue((None,0,2,2) in self.nim.p_positions())
+        self.assertEqual(self.nim.rectangle, (None,2,3,3))
         self.assertEqual(self.nim.preperiod, (None,0,1,1))
-        self.assertEqual(self.nim.period(), (None,2,2,1))
+        self.assertEqual(self.nim.period(), (None,2,2,2))
 
     def test_example4(self):
         self.nim.setMiserePlay()
