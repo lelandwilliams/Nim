@@ -170,7 +170,7 @@ class NimBase(NimTuples):
         # rectangle_test_tuple is set to rectangle, with all the 
         # dimensions up to test_dim zeroed out
         test_tuple = self.rectangle
-        for i in range(1, test_dim):
+        for i in range(1, test_dim + 1):
            test_tuple = self.setTuplePositionXtoY(test_tuple, i, 0)
 
         # set test_tuple to have the same value in test_dim as self.preperiod
