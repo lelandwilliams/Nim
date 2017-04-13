@@ -59,23 +59,45 @@ class NimReport(NimBase):
 
         report_boundary = self.rectangle if report_boundary == None else report_boundary
         
-        max_dimension = 0 # see how many dimensions the boundary tuple contains
-        for i in range(len(report_boundary)):
-            if report_boundary[i] != None and report_boundary[i] != 0:
-                max_dimension += 1
-
-        if max_dimension == 0:
+        if len(report_boundary) < 2: # since a len of one would only be the (None) tuple
             return "No dimensions to report\n"
 
+        lines = list()
         cur_t = self.origen
-        if max_dimension == 1: 
-            text = ""
-            for i in range(self.report_boundary[1]):
-                text += self.getOutcome[cur_t] + " "
-                cur_t = self.incrementTuple(cur_t,1)
-            return text
-        else:
-            return self.printGrid()
+        line = str()
+        if len(report_boundary) > 3:
+            for i in range(report_boundary[3]):
+                line += ("x3 = {:<3}x1 = ".format(i))
+                for k in range(report_boundary[1]):
+                    line += ("{:<2d}".format(k))
+            lines.append(line)
+
+            for j in range(report_boundary[2]):
+                line = str()
+                line += "x2 = {:<3}".format(cur_t[2])
+                for i in range(report_boundary[3]):
+                    line += "{:5}".format(" ")
+                    for k in range(report_boundary[1]):
+                        line += "{:<2}".format(self.getOutcome(cur_t))
+                        cur_t = self.incrementTupleWithCarry(cur_t, 1, True)
+                    line += "{:8}".format(" ")
+                lines.append(line)
+
+
+
+        else: 
+            line += ("{:>9}".format(" "))
+            line += "x1 = "
+            for i in range(report_boundary[1]):
+                line += ("{:2d}".format(i))
+            line += "\n"
+            lines.append(line)
+
+        line = str()
+        for l in lines:
+            print(l)
+
+
 
     def printGridHeader(self,c):
         line = str()
