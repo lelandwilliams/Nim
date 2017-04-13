@@ -88,17 +88,26 @@ class NimTuples:
         return new_t
 
 
-    def incrementTupleWithCarry(self, t, dim = 1, exclusive = False, boundary = None):
+    def incrementTupleWithCarry(self, t, dim = 1, exclusive = False, boundary = None,
+            carry = 0):
         
         # Input: t, a tuple
         #        dim, the dimension to increment (defaults to 1)
         #        exclusice, determines whether the comparison should be > or >=
         #        boundary, the tuple of maximum dimensions. If not specified, is set to self.rectangle
+        #   carry, the dimension of the last carry operation.
 
-        # Output: the incremented tuple, with values of the boundary 'carried' to the next level
-        #       unless the value of the position is None, or the Tuple is maxed out, in which cases
-        #       the origen tuple is returned.
+        # Output: the incremented tuple, with values of the boundary 
+        # 'carried' to the next level
+        # unless the value of the position is None, 
+        # or the Tuple is maxed out, in which cases
+        # the origin is returned.
+        #
+        # In either case, the class member self.carry_dimension
+        # is set, either to 0 if no carry was performed, or
+        # to the highest dimenstion that was carried into.
 
+        self.carry_dim = carry
         boundary = self.rectangle if boundary == None else boundary
 
         if (dim < len(t)) and (t[dim] != None) :
@@ -107,7 +116,7 @@ class NimTuples:
             if ((not exclusive and (t[dim] > boundary[dim])) or 
                     (exclusive and (t[dim] >= boundary[dim]))): 
                 t = self.setTuplePositionXtoY(t, dim, 0) # set selected position to 0
-                t = self.incrementTupleWithCarry(t, dim + 1) # and increment the next position
+                t = self.incrementTupleWithCarry(t, dim + 1, exclusive, boundary, dim+1) # and increment the next position
             return t
         else:
             try: self.origen
