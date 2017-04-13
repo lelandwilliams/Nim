@@ -5,6 +5,12 @@ class TestNim(unittest.TestCase):
     def setUp(self):
         self.nim = Nim()
 
+    def test_incrementTupleWithCarry(self):
+        self.nim.setDimensions(4)
+        self.nim.rectangle = (None,0,0,0,0)
+        self.nim.incrementTupleWithCarry((None,1,1,1,1))
+        self.assertTrue(self.nim.carry_dim)
+
     def test_example1(self):
         self.nim.setDimensions(1)
         self.nim.run()
