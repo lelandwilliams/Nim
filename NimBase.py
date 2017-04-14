@@ -36,7 +36,7 @@ class NimBase(NimTuples):
         self.rectangle = () # The shape of the rectangle needed to work out the period
         self.normal_play = True
 
-        self.setDimensions(3) # sets above parameters to 3 dimensional objects
+#        self.setDimensions(3) # sets above parameters to 3 dimensional objects
         self.moves = self.setStandardMoves() # A list of the moves, according to the rules
 
         self.print_report_when_done = False

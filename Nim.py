@@ -20,6 +20,13 @@ class Nim(NimReport):
             return True
         self.setDimensions(dimensions)
 
+
+    def setDimensions(dim):
+        self.max_dimensions = dimensions
+        self.origen = self.fillTuple((None,))
+        self.rectangle = self.origen
+        self.preperiod = self.origen
+
         # Test various values of rulecode to set it properly
         # If rulecode is not set, set it to 0.3333....
         if self.rulecode == None:
@@ -35,6 +42,8 @@ class Nim(NimReport):
         # throw
         if type(rulecode) != type(str()):
             throw("rulecode {} is invalid. Please enter a string or a float\n".format(self.rulecode))
+
+        # And test that the string is a valid code
 
 
 
