@@ -63,28 +63,31 @@ class NimReport(NimBase):
 
         lines = list()
         cur_t = self.origen
-        self.carry_dim = 0
         line = str()
         if len(report_boundary) > 3:
-            for i in range(report_boundary[3]):
-                line += ("x3 = {:<3}x1 = ".format(i))
-                for k in range(report_boundary[1]):
-                    line += ("{:<2d}".format(k))
-                line += "  "
-            if len(report_boundary) > 4:
-                lines.append(self.gridHeader(cur_t).center(len(line)))
-            lines.append(line)
-
-            for j in range(report_boundary[2]):
+            self.carry_dim = 0
+            while(cur_t != self.origen or self.carry_dim == 0):
                 line = str()
-                line += "x2 = {:<3}".format(j)
                 for i in range(report_boundary[3]):
-                    line += "{:5}".format(" ")
+                    line += ("x3 = {:<3}x1 = ".format(i))
                     for k in range(report_boundary[1]):
-                        line += "{:<2}".format(self.getOutcome(cur_t))
-                        cur_t = self.incrementTupleWithCarry(cur_t, 1, True)
-                    line += "{:10}".format(" ")
+                        line += ("{:<2d}".format(k))
+                    line += "  "
+                if len(report_boundary) > 4:
+                    lines.append(self.gridHeader(cur_t).center(len(line)))
                 lines.append(line)
+
+                for j in range(report_boundary[2]):
+                    line = str()
+                    line += "x2 = {:<3}".format(j)
+                    for i in range(report_boundary[3]):
+                        line += "{:5}".format(" ")
+                        for k in range(report_boundary[1]):
+                            line += "{:<2}".format(self.getOutcome(cur_t))
+                            cur_t = self.incrementTupleWithCarry(cur_t, 1, True)
+                        line += "{:10}".format(" ")
+                    lines.append(line)
+                lines.append("")
 
 
 
