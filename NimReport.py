@@ -27,8 +27,7 @@ class NimReport(NimBase):
         return position_list
 
     def report(self):
-
-        return self.report_parameters() + self.printGrid()
+        return self.report_parameters() + self.reportGrids()
 
     def report_parameters(self):
 
@@ -70,6 +69,7 @@ class NimReport(NimBase):
                 line += ("x3 = {:<3}x1 = ".format(i))
                 for k in range(report_boundary[1]):
                     line += ("{:<2d}".format(k))
+                line += "  "
             lines.append(line)
 
             for j in range(report_boundary[2]):
@@ -80,7 +80,7 @@ class NimReport(NimBase):
                     for k in range(report_boundary[1]):
                         line += "{:<2}".format(self.getOutcome(cur_t))
                         cur_t = self.incrementTupleWithCarry(cur_t, 1, True)
-                    line += "{:8}".format(" ")
+                    line += "{:10}".format(" ")
                 lines.append(line)
 
 
@@ -93,9 +93,13 @@ class NimReport(NimBase):
             line += "\n"
             lines.append(line)
 
-        line = str()
+#       for l in lines:
+#           print(l)
+
+        retval = str()
         for l in lines:
-            print(l)
+            retval += l + "\n"
+        return retval
 
 
 
