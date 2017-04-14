@@ -63,6 +63,7 @@ class NimReport(NimBase):
 
         lines = list()
         cur_t = self.origen
+        self.carry_dim = 0
         line = str()
         if len(report_boundary) > 3:
             for i in range(report_boundary[3]):
@@ -70,11 +71,13 @@ class NimReport(NimBase):
                 for k in range(report_boundary[1]):
                     line += ("{:<2d}".format(k))
                 line += "  "
+            if len(report_boundary) > 4:
+                lines.append(self.gridHeader(cur_t).center(len(line)))
             lines.append(line)
 
             for j in range(report_boundary[2]):
                 line = str()
-                line += "x2 = {:<3}".format(cur_t[2])
+                line += "x2 = {:<3}".format(j)
                 for i in range(report_boundary[3]):
                     line += "{:5}".format(" ")
                     for k in range(report_boundary[1]):
@@ -103,13 +106,12 @@ class NimReport(NimBase):
 
 
 
-    def printGridHeader(self,c):
+    def gridHeader(self,c):
         line = str()
-        for i in range(3, len(c)):
+        for i in range(4, len(c)):
             if len(line) > 0:
                 line+=", "
             line += "x_{} = {}".format(i, c[i])
-        line += "\n"
         return line
 
     def printGrid(self, truncate = False):
