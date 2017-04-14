@@ -70,5 +70,5 @@ class TestNim(unittest.TestCase):
         self.assertEqual(self.nim.period(), (None,2,2,1,2))
 
 if __name__=='__main__':
-    unittest.main()
+    unittest.main(exit=False)
 
