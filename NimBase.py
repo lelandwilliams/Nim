@@ -66,8 +66,8 @@ class NimBase(NimTuples):
             return False
 
         # verify preperiod and period still holds for new value of rectangle
-        failure_dimension = self.verify(dim - 1) 
-        if failure_dimension != -1:
+        failure_dimension = self.verify(dim) 
+        if failure_dimension:
             return self.explore(failure_dimension)
 
         # see if new value of rectangle matches an earlier value
@@ -151,7 +151,28 @@ class NimBase(NimTuples):
                         (self.rectangle[i] - self.preperiod[i]))
         return t
 
-    def verify(self, test_dim):
+    def verify(self, dim, check_t = None):
+
+        # Input: the dimensions to make sure works. 
+        #   In the call from explore, this should be the explore dimension
+        # Output: 0 if everything is hunky-dory, else the dimension that 
+        #   don't fly
+
+        if not check_t:
+            check_t = self.rectangle
+        if dim -1 == 0:
+            return 0
+        test_tuple = self.setTuplePositionXtoY(check_t, dim-1, self.preperiod[dim-1])
+        if self.getSlice(dim -1, test_tuple) != self.getSlice(dim -1, check_t):
+            return dim -1
+        for i in range(check_t[dim -1]):
+            test_tuple = self.setTuplePositionXtoY(check_t, dim-1, i)
+            if self.verify(dim -1, test_tuple):
+                return self.verify(dim -1, test_tuple)
+        return 0
+
+
+    def xverify(self, test_dim):
 
         # Input: test_dim, the dimension of self.rectangle in which we are currently checking
         # Output: -1 if no error found, or test_dim if an error found
