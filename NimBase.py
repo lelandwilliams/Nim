@@ -221,6 +221,28 @@ class NimBase(NimTuples):
         self.normal_play = True
         self.outcomes[self.origen] = 'P'
 
+    def setMoves(self, code):
+        
+        #Input: a valid quartenary code string
+        #Output: nothing
+        # This function sets self.moves accoring to the code given
+        # It requires that self.max_dimension is set
+
+        self.moves = list()
+        cur_position = 1
+        for digit in code[2:]:
+            if digit == '1' or digit == '3':
+                new_move = self.setTuplePositionXtoY(self.origen, cur_position, -1)
+                self.moves.append(new_move)
+            if digit == '2' or digit == '3':
+                for j in range(cur_position + 1, self.max_dimensions +1):
+                    new_move = self.setTuplePositionXtoY(self.origen, j, -1)
+                    new_move = self.setTuplePositionXtoY(new_move, j-cur_position, 1)
+                    self.moves.append(new_move)
+            cur_position += 1
+
+
+                
     def setMiserePlay(self):
         self.normal_play = False
         self.outcomes[self.origen] = 'N'
