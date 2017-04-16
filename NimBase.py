@@ -228,6 +228,9 @@ class NimBase(NimTuples):
         # This function sets self.moves accoring to the code given
         # It requires that self.max_dimension is set
 
+        while len(code) < self.max_dimensions + 3:
+            code += "0"
+
         self.moves = list()
         cur_position = 1
         for digit in code[2:]:
