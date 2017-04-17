@@ -221,13 +221,33 @@ class NimBase(NimTuples):
         self.normal_play = True
         self.outcomes[self.origen] = 'P'
 
-    def setMoves(self, code):
+    def setMoves(self, code=None):
         
         #Input: a valid quartenary code string
         #Output: nothing
         # This function sets self.moves accoring to the code given
         # It requires that self.max_dimension is set
 
+
+        self.code = code
+        # Test various values of rulecode to set it properly
+        # If rulecode is not set, set it to 0.3333....
+        if self.code == None:
+            self.code = "0."
+            while len(self.code < dimensions + 2):
+                self.code += "3"
+
+        # If rulecode entered as a float, convert to a string
+        if type(self.code) == type(float()):
+            self.code = code.str()
+
+        # At this point rulecode should be a string. If not, 
+        # throw
+        if type(self.code) != type(str()):
+            throw("code {} is invalid." + 
+                    "Please enter a string or a float\n".format(self.code))
+
+        # And add trailing 0's to shorthand codes
         while len(code) < self.max_dimensions + 3:
             code += "0"
 
@@ -243,7 +263,6 @@ class NimBase(NimTuples):
                     new_move = self.setTuplePositionXtoY(new_move, j-cur_position, 1)
                     self.moves.append(new_move)
             cur_position += 1
-
 
                 
     def setMiserePlay(self):
