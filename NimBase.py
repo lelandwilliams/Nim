@@ -10,7 +10,6 @@ class NimBase(NimTuples):
 # setDimensions(self, dimensions)
 # setNomalPlay(self)
 # setMiserePlay(self)
-# setStandardMoves(self)
 
     def __init__(self, run = False):
 
@@ -21,9 +20,6 @@ class NimBase(NimTuples):
         #
         # The class tuples are predefined to () until the setup function is run,
         # which automatically creates them according to the given dimension
-        #
-        # The moves list is populated by various setMoves functions. By default it is set
-        # to setStandardMoves().
 
         self.max_dimensions = 0 # The maximum number of dimensions to consider
         self.max_depth = 100 # The maximum allowed size of the rectangle in any dimension
@@ -35,10 +31,6 @@ class NimBase(NimTuples):
                             # outcomes are either 'N' or 'P'
         self.rectangle = () # The shape of the rectangle needed to work out the period
         self.normal_play = True
-
-#        self.setDimensions(3) # sets above parameters to 3 dimensional objects
-        self.moves = self.setStandardMoves() # A list of the moves, according to the rules
-
         self.print_report_when_done = False
 
         if run:
