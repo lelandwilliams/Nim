@@ -7,11 +7,11 @@ class Nim(NimReport):
     with python3.
     """
 
-    def __init__(self, dimensions=3, rulecode=None, normalPlay = True):
+    def __init__(self, dimensions=3, rulecode=None, normalPlay = False):
         # TODO make normal play an enum
         # TODO make dimensions have a default of None
 
-        super.__init__(); # calls super class inits
+        super.__init__(self); # calls super class inits
         self.rulecode = rulecode
 
         # Test for non-full parameters, since we cant run without them
@@ -41,7 +41,8 @@ class Nim(NimReport):
         # At this point rulecode should be a string. If not, 
         # throw
         if type(rulecode) != type(str()):
-            throw("rulecode {} is invalid. Please enter a string or a float\n".format(self.rulecode))
+            throw("rulecode {} is invalid." +
+                    "Please enter a string or a float\n".format(self.rulecode))
 
         # And test that the string is a valid code
 
