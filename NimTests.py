@@ -11,6 +11,15 @@ class TestNim(unittest.TestCase):
         self.nim.incrementTupleWithCarry((None,1,1,1,1))
         self.assertTrue(self.nim.carry_dim)
 
+    def test_setMoves(self):
+        self.nim.setDimensions(2)
+        self.nim.setMoves(self)
+        self.assertEqual(len(self.nim.moves), 3)
+        self.assertTrue((None,-1,0) in self.nim.moves)
+        self.assertTrue((None,1,-1) in self.nim.moves)
+        self.assertTrue((None,0,-1) in self.nim.moves)
+
+
     def test_example1(self):
         self.nim.setDimensions(1)
         self.nim.run()
