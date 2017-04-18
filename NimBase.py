@@ -154,13 +154,15 @@ class NimBase(NimTuples):
             check_t = self.rectangle
         if dim -1 == 0:
             return 0
-        test_tuple = self.setTuplePositionXtoY(check_t, dim-1, self.preperiod[dim-1])
-        if self.getSlice(dim -1, test_tuple) != self.getSlice(dim -1, check_t):
-            return dim -1
+
         for i in range(check_t[dim -1]):
             test_tuple = self.setTuplePositionXtoY(check_t, dim-1, i)
             if self.verify(dim -1, test_tuple):
                 return self.verify(dim -1, test_tuple)
+        test_tuple = self.setTuplePositionXtoY(check_t, dim-1, self.preperiod[dim-1])
+        if self.getSlice(dim -1, test_tuple) != self.getSlice(dim -1, check_t):
+            return dim -1
+        
         return 0
 
 
@@ -221,27 +223,27 @@ class NimBase(NimTuples):
         # It requires that self.max_dimension is set
 
 
-        self.code = code
+        self.rulecode = code
         # Test various values of rulecode to set it properly
         # If rulecode is not set, set it to 0.3333....
-        if self.code == None:
-            self.code = "0."
-            while len(self.code < dimensions + 2):
-                self.code += "3"
+        if self.rulecode == None:
+            self.rulecode = "0."
+            while len(self.rulecode < dimensions + 2):
+                self.rulecode += "3"
 
         # If rulecode entered as a float, convert to a string
-        if type(self.code) == type(float()):
-            self.code = code.str()
+        if type(self.rulecode) == type(float()):
+            self.rulecode = code.str()
 
         # At this point rulecode should be a string. If not, 
         # throw
-        if type(self.code) != type(str()):
-            throw("code {} is invalid." + 
-                    "Please enter a string or a float\n".format(self.code))
+        if type(self.rulecode) != type(str()):
+            raise ValueError("code {} is invalid." + 
+                    "Please enter a string or a float\n".format(self.rulecode))
 
         # And add trailing 0's to shorthand codes
-        while len(code) < self.max_dimensions + 3:
-            code += "0"
+        while len(self.rulecode) < self.max_dimensions + 3:
+            self.rulecode += "0"
 
         self.moves = list()
         cur_position = 1

@@ -1,4 +1,4 @@
-import NimReport
+from NimReport import NimReport
 
 class Nim(NimReport):
     """ This is the 'top-level' or 'user-level' class of this project
@@ -11,7 +11,7 @@ class Nim(NimReport):
         # TODO make normal play an enum
         # TODO make dimensions have a default of None
 
-        super.__init__(self); # calls super class inits
+        super().__init__(); # calls super class inits
         self.rulecode = rulecode
 
         # Test for non-full parameters, since we cant run without them
@@ -21,8 +21,8 @@ class Nim(NimReport):
         self.setDimensions(dimensions)
 
 
-    def setDimensions(dim):
-        self.max_dimensions = dimensions
+    def setDimensions(self, dim):
+        self.max_dimensions = dim
         self.origen = self.fillTuple((None,))
         self.rectangle = self.origen
         self.preperiod = self.origen
@@ -31,22 +31,23 @@ class Nim(NimReport):
         # If rulecode is not set, set it to 0.3333....
         if self.rulecode == None:
             self.rulecode = "0."
-            while len(self.rulecode < dimensions + 2):
+            while len(self.rulecode) < self.max_dimensions + 2:
                 self.rulecode += "3"
 
         # If rulecode entered as a float, convert to a string
-        if type(rulecode) == type(float()):
+        if type(self.rulecode) == type(float()):
             self.rulecode = rulecode.str()
 
         # At this point rulecode should be a string. If not, 
         # throw
-        if type(rulecode) != type(str()):
+        if type(self.rulecode) != type(str()):
             throw("rulecode {} is invalid." +
                     "Please enter a string or a float\n".format(self.rulecode))
 
         # And test that the string is a valid code
 
 
+        self.setMoves(self.rulecode)
 
 
 
