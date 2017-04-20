@@ -63,6 +63,7 @@ class TestNim(unittest.TestCase):
 
     def test_example4(self):
         nim = Nim(4)
+        nim.setMiserePlay()
         nim.moves = [(None,-1,0,0,0),(None,0,-1,0,0),(None,1,-1,0,0),(None,0,1,-1,0),(None,1,0,0,-1),(None,0,0,1,-1)]
         nim.run()
         self.assertEqual(len(nim.p_positions()), 8)
