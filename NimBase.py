@@ -1,6 +1,6 @@
 from NimTuples import NimTuples
 
-class PlayType(Enum) :
+class PlayCondition(Enum) :
     Normal = 0
     Misere = 1
 
