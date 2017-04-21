@@ -1,4 +1,5 @@
 from NimTuples import NimTuples
+from enum import Enum
 
 class PlayCondition(Enum) :
     Normal = 0
