@@ -1,5 +1,9 @@
 from NimTuples import NimTuples
 
+class PlayType(Enum) :
+    Normal = 0
+    Misere = 1
+
 class NimBase(NimTuples):
 
 # This class provides the following functions:
