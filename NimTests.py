@@ -13,7 +13,6 @@ class TestNim(unittest.TestCase):
     def test_setMoves(self):
         nim = Nim(2)
         nim.setNormalPlay()
-        nim.setDimensions(2)
         self.assertEqual(len(nim.moves), 3)
         self.assertTrue((None,-1,0) in nim.moves)
         self.assertTrue((None,1,-1) in nim.moves)
