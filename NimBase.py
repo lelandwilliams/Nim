@@ -238,7 +238,7 @@ class NimBase(NimTuples):
 
         # If rulecode entered as a float, convert to a string
         if type(self.rulecode) == type(float()):
-            self.rulecode = code.str()
+            self.rulecode = str(self.rulecode)
 
         # At this point rulecode should be a string. If not, 
         # throw
@@ -247,7 +247,7 @@ class NimBase(NimTuples):
                     "Please enter a string or a float\n".format(self.rulecode))
 
         # And add trailing 0's to shorthand codes
-        while len(self.rulecode) < self.max_dimensions + 3:
+        while len(self.rulecode) < self.max_dimensions + 2:
             self.rulecode += "0"
 
         self.moves = list()
