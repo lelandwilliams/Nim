@@ -31,12 +31,12 @@ class Nim(NimReport):
         # If rulecode is not set, set it to 0.3333....
         if self.rulecode == None:
             self.rulecode = "0."
-            while len(self.rulecode) < self.max_dimensions + 2:
+            while len(self.rulecode) < (self.max_dimensions + 2):
                 self.rulecode += "3"
 
         # If rulecode entered as a float, convert to a string
         if type(self.rulecode) == type(float()):
-            self.rulecode = rulecode.str()
+            self.rulecode = str(self.rulecode)
 
         # At this point rulecode should be a string. If not, 
         # throw
@@ -44,10 +44,9 @@ class Nim(NimReport):
             throw("rulecode {} is invalid." +
                     "Please enter a string or a float\n".format(self.rulecode))
 
+        # If rulecode is too short, add some zeros to the end
+        for i in range(len(self.rulecode), (self.max_dimensions + 2)):
+            self.rulecode += "0"
         # And test that the string is a valid code
 
-
         self.setMoves(self.rulecode)
-
-
-

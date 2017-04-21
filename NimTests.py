@@ -24,6 +24,8 @@ class TestNim(unittest.TestCase):
         self.assertTrue((None,-1,0) in nim.moves)
         self.assertTrue((None,1,-1) in nim.moves)
         self.assertTrue((None,0,-1) in nim.moves)
+        nim = Nim(6, 0.3122)
+        self.assertEqual(nim.rulecode, "0.312200")
 
 
     def test_example1(self):
