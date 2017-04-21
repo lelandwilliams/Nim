@@ -9,6 +9,13 @@ class TestNim(unittest.TestCase):
         nim.rectangle = (None,0,0,0,0)
         nim.incrementTupleWithCarry((None,1,1,1,1))
         self.assertTrue(nim.carry_dim)
+        nim.rectangle = (None,2,2,2,2)
+        t = nim.incrementTupleWithCarry(nim.origen)
+        self.assertEqual(t, (None,1,0,0,0))
+        self.assertFalse(nim.carry_dim)
+        t = nim.incrementTupleWithCarry((None,2,2,0,0))
+        self.assertEqual(t, (None,0,0,1,0))
+        self.assertEqual(nim.carry_dim, 3)
 
     def test_setMoves(self):
         nim = Nim(2)
