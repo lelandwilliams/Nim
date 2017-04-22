@@ -1,14 +1,13 @@
 from NimReport import NimReport
 
 class Nim(NimReport):
-    """ This is the 'top-level' or 'user-level' class of this project
+    """ This is the 'top-level' or 'user-level' (sub)class of this project
     Make sure you run this class with python3. If you are getting weird
     messages about super(), then you probably tried to use this class
     with python2.
     """
 
-    def __init__(self, dimensions=3, rulecode=None, normalPlay = False):
-        # TODO make normal play an enum
+    def __init__(self, dimensions=3, rulecode=None, play = PlayCondition.Normal):
         # TODO make dimensions have a default of None
 
         super().__init__(); # calls super class inits
