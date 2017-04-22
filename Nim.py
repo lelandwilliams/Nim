@@ -1,4 +1,5 @@
 from NimReport import NimReport
+from NimBase import PlayCondition
 
 class Nim(NimReport):
     """ This is the 'top-level' or 'user-level' (sub)class of this project
@@ -12,6 +13,7 @@ class Nim(NimReport):
 
         super().__init__(); # calls super class inits
         self.rulecode = rulecode
+        self.playCondition = play
 
         # Test for non-full parameters, since we cant run without them
         # Todo: Enter an interactive mode
@@ -25,7 +27,9 @@ class Nim(NimReport):
         self.origen = self.fillTuple((None,))
         self.rectangle = self.origen
         self.preperiod = self.origen
-
-       # And test that the string is a valid code
+        if self.playCondition is PlayCondition.Normal:
+            self.outcomes[self.origen] = 'P'
+        if self.playCondition is PlayCondition.Misere:
+            self.outcomes[self.origen] = 'N'
 
         self.setMoves(self.rulecode)
