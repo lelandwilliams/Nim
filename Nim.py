@@ -4,7 +4,7 @@ class Nim(NimReport):
     """ This is the 'top-level' or 'user-level' class of this project
     Make sure you run this class with python3. If you are getting weird
     messages about super(), then you probably tried to use this class
-    with python3.
+    with python2.
     """
 
     def __init__(self, dimensions=3, rulecode=None, normalPlay = False):
