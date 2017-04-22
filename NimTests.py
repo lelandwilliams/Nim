@@ -1,5 +1,5 @@
-#from NimReport import NimReport as Nim
 from Nim import Nim
+from NimBase import PlayCondition
 import unittest
 
 class TestNim(unittest.TestCase):
@@ -19,13 +19,12 @@ class TestNim(unittest.TestCase):
 
     def test_setMoves(self):
         nim = Nim(2)
-        nim.setNormalPlay()
         self.assertEqual(len(nim.moves), 3)
         self.assertTrue((None,-1,0) in nim.moves)
         self.assertTrue((None,1,-1) in nim.moves)
         self.assertTrue((None,0,-1) in nim.moves)
 
-        nim = Nim(6, 0.3122)
+        nim = Nim(6, 0.3122, PlayCondition.Misere)
         self.assertEqual(nim.rulecode, "0.312200")
         self.assertEqual(len(nim.moves), 12)
 
@@ -40,7 +39,6 @@ class TestNim(unittest.TestCase):
 
     def test_example2(self):
         nim = Nim(2)
-        nim.setNormalPlay()
         nim.run()
         self.assertEqual(len(nim.p_positions()), 1)
         self.assertEqual(nim.p_positions(), [(None,0,0)])
@@ -48,8 +46,7 @@ class TestNim(unittest.TestCase):
         self.assertEqual(nim.preperiod, (None,0,0))
 
     def test_example3(self):
-        nim = Nim(2)
-        nim.setMiserePlay()
+        nim = Nim(2,None, PlayCondition.Misere)
         nim.run()
         self.assertEqual(len(nim.p_positions()), 2)
         self.assertTrue((None,1,0) in nim.p_positions())
