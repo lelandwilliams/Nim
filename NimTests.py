@@ -91,10 +91,7 @@ class TestNim(unittest.TestCase):
         self.assertEqual(nim.period(), (None,2,2,2))
 
     def test_example4(self):
-#       nim = Nim(4, 0.3122, PlayCondition.Misere)
-        nim = Nim(4)
-        nim.setMiserePlay()
-        nim.moves = [(None,-1,0,0,0),(None,0,-1,0,0),(None,1,-1,0,0),(None,0,1,-1,0),(None,1,0,0,-1),(None,0,0,1,-1)]
+        nim = Nim(4, 0.3122, PlayCondition.Misere)
         nim.run()
         self.assertEqual(len(nim.p_positions()), 8)
         self.assertTrue((None,1,0,0,0) in nim.p_positions())
