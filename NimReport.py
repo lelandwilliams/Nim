@@ -51,10 +51,13 @@ class NimReport(NimBase):
 
     def reportGrids(self, report_boundary = None):
 
-        # Input: report_boundary, a tuple representing the boundary of you wish to print
-        #
-        # Output: a string containg the values of self.outcomes
-        #   arranged in grids
+        """ Input: report_boundary, a tuple representing the boundary of you wish to print
+                    It defaults to rectangle, but allow for custom values, if, perhaps
+                    a shorter report are is desired.
+        
+         Output: a string containg the values of self.outcomes
+           arranged in grids
+        """
 
         report_boundary = self.rectangle if report_boundary == None else report_boundary
         
@@ -64,29 +67,74 @@ class NimReport(NimBase):
         lines = list()
         cur_t = self.origen
         line = str()
+
         if len(report_boundary) > 3:
+            # Remember that the first dimension in the tuple
+            # is 'None, so if len is 3, then there are only
+            # 2 dimensions.
+            # If there are 3 or less dimensions being explored
+            # Print a Header saying what the upper dimensions are.
+            # and include the 3rd dimension in the table
             self.carry_dim = 0
             while(cur_t != self.origen or self.carry_dim == 0):
+                # the above tests to see of cur_t has 'wrapped around'
+                # in which case we should quit
+
+                # It is not useful here to simply nest for-loops,
+                # because we must create tables for an arbitraty number of 
+                # dimensions.
+                # Besides, for loops nested 10-deep are not very pretty.
+                #
+                # So we use cur_t to index through the outcomes.
+                # and increment it with the incrementTupleWithCarry
+
+                # We use the True option in incrementTupleWithCarry
+                # to exclude the highest value of each dimension 
+                # This lines up with the for-loops that we do use
+                # for the lowest 3 dimensions, since we iterate over
+                # the range of up-to and not including.
+
                 line = str()
+                # now print the x_3 dimensions across the top of the table
+                # followed by the x_1s
                 for i in range(report_boundary[3]):
                     line += ("x3 = {:<3}x1 = ".format(i))
                     for k in range(report_boundary[1]):
                         line += ("{:<2d}".format(k))
                     line += "  "
                 if len(report_boundary) > 4:
+                    # Since there is at least a 4th dimension,
+                    # we add a header line saying so.
                     lines.append(self.gridHeader(cur_t).center(len(line)))
                 lines.append(line)
 
-                for j in range(report_boundary[2]):
+                sublines = list()
+                # Now the tricky part. We have to print down
+                # then back to the top and down again.
+                # We do this by creating the list sublines[],
+                # and adding onto each subline for each X_3
+                for i in range(report_boundary[2]):
+                    # First we instantiate the sublines with the 'x_2 = i' line header
                     line = str()
-                    line += "x2 = {:<3}".format(j)
-                    for i in range(report_boundary[3]):
-                        line += "{:5}".format(" ")
+                    line += "x2 = {:<3}".format(i)
+                    sublines.append(line)
+
+                for i in range(report_boundary[3]):
+                    # Now we actually start adding 'P's and 'N's to the lines
+                    for j in range(report_boundary[2]):
+                        if i == 0:
+                            sublines[j] += "{:5}".format(" ")
+                        else:
+                            sublines[j] += "{:15}".format(" ")
+
                         for k in range(report_boundary[1]):
-                            line += "{:<2}".format(self.getOutcome(cur_t))
-                            cur_t = self.incrementTupleWithCarry(cur_t, 1, True)
-                        line += "{:10}".format(" ")
-                    lines.append(line)
+                                sublines[j] += "{:<2}".format(self.getOutcome(cur_t))
+                                cur_t = self.incrementTupleWithCarry(cur_t, 1, True)
+                                # see note under while statement for 
+                                # explanation of use of cur_t
+                    
+                for subline in sublines:
+                    lines.append(subline)
                 lines.append("")
 
 
