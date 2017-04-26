@@ -241,11 +241,3 @@ class NimBase(NimTuples):
     def updatePreperiod(self, cur_dimension, match_value):
         self.preperiod = self.setTuplePositionXtoY(self.preperiod, cur_dimension, match_value)
 
-    def setStandardMoves(self):
-        moves = []
-        for i in range(1, self.max_dimensions + 1):
-            base_tuple = self.decrementTuple( self.fillTuple((None,)) , i)
-            moves.append(base_tuple)
-            for j in range(1, i):
-                moves.append(self.incrementTuple(base_tuple,j))
-        return moves
