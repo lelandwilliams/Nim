@@ -170,11 +170,20 @@ class NimBase(NimTuples):
            don't fly
         """
 
+        # First check input parameters, and set them if they are set to default
         if not check_t:
             check_t = self.rectangle
-        if dim -1 == 0:
+        if not dim:
+            dim = 0
+            for i in range(1,len(check_t)+1):
+                if check_t(i) != 0 :
+                    dim = i
+
+        # base_case for recursion:
+        if dim ==0:
             return 0
 
+        # Now to check dimensions
         for i in range(check_t[dim -1]):
             test_tuple = self.setTuplePositionXtoY(check_t, dim-1, i)
             if self.verify(dim -1, test_tuple):
