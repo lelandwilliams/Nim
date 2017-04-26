@@ -148,12 +148,27 @@ class NimBase(NimTuples):
                         (self.rectangle[i] - self.preperiod[i]))
         return t
 
-    def verify(self, dim, check_t = None):
+    def verify(self, dim=None, check_t = None):
+        """ 
+        This function should be called primarily by explore(), in the case
+        that explore increases the value of a certain dimension. While explore
+        looks forward to find new values and check them for periodicity, 
+        This function looks backwards to see that the currently determined
+        periods still work.
 
-        # Input: the dimensions to make sure works. 
-        #   In the call from explore, this should be the explore dimension
-        # Output: 0 if everything is hunky-dory, else the dimension that 
-        #   don't fly
+        This function is recurvise, so that it looks over the entire slice of 
+        the new dimension to see if the period and preperiod holds.
+
+         Input: the dimensions of the new value for which we we want to make 
+            priorly determined periods still hold.
+          explore() calls this without parameters, in which case this
+            function sets it to the last non-zero entry in self.rectangle
+
+          check_t, the current check_tuple. It defaults to self.rectrnagle
+            of various dimensions we should look to verify matches
+         Output: 0 if everything is hunky-dory, else the dimension that 
+           don't fly
+        """
 
         if not check_t:
             check_t = self.rectangle
@@ -218,6 +233,7 @@ class NimBase(NimTuples):
 
         # And add trailing 0's to shorthand codes
         while len(self.rulecode) < self.max_dimensions + 2:
+            q
             self.rulecode += "0"
 
         self.moves = list()
