@@ -1,3 +1,7 @@
+import sys
+if sys.version_info[:2] < (3, 4):
+    sys.stderr.write("This code requires Python version 3.4 or later")
+    exit(1)
 from NimReport import NimReport
 from NimBase import PlayCondition
 
