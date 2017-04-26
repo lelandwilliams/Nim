@@ -203,7 +203,7 @@ class NimBase(NimTuples):
         # If rulecode is not set, set it to 0.3333....
         if self.rulecode == None:
             self.rulecode = "0."
-            while len(self.rulecode < dimensions + 2):
+            while len(self.rulecode) < self.max_dimensions + 2:
                 self.rulecode += "3"
 
         # If rulecode entered as a float, convert to a string
@@ -222,7 +222,7 @@ class NimBase(NimTuples):
 
         self.moves = list()
         cur_position = 1
-        for digit in code[2:]:
+        for digit in self.rulecode[2:]:
             if digit == '1' or digit == '3':
                 new_move = self.setTuplePositionXtoY(self.origen, cur_position, -1)
                 self.moves.append(new_move)
