@@ -184,7 +184,7 @@ class NimBase(NimTuples):
             return 0
 
         # Now to check dimensions
-        for i in range(check_t[dim -1]):
+        for i in range(check_t[dim]):
             test_tuple = self.setTuplePositionXtoY(check_t, dim-1, i)
             if self.verify(dim -1, test_tuple):
                 return self.verify(dim -1, test_tuple)
@@ -242,7 +242,6 @@ class NimBase(NimTuples):
 
         # And add trailing 0's to shorthand codes
         while len(self.rulecode) < self.max_dimensions + 2:
-            q
             self.rulecode += "0"
 
         self.moves = list()
