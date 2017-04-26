@@ -170,36 +170,6 @@ class NimBase(NimTuples):
         
         return 0
 
-
-    def xverify(self, test_dim):
-
-        # Input: test_dim, the dimension of self.rectangle in which we are currently checking
-        # Output: -1 if no error found, or test_dim if an error found
-
-        assert test_dim >= 0
-
-        if test_dim == 0: # the recursion 'base case'
-            return -1 # -1 indicates all values pass
-
-        # test prior dimensions before this one
-        # if an error is found, return
-        return_value = self.verify(test_dim -1) 
-        if return_value != -1:
-            return return_value
-       
-        # rectangle_test_tuple is set to rectangle, with all the 
-        # dimensions up to test_dim zeroed out
-        test_tuple = self.rectangle
-        for i in range(1, test_dim + 1):
-           test_tuple = self.setTuplePositionXtoY(test_tuple, i, 0)
-
-        # set test_tuple to have the same value in test_dim as self.preperiod
-        test_tuple = self.setTuplePositionXtoY(test_tuple, test_dim, self.preperiod[test_dim])
-
-        if self.getSlice(test_dim,test_tuple) != self.getSlice(test_dim,self.rectangle):
-            return_value = test_dim
-        return return_value
-
     #
     # below are setter functions
     #
