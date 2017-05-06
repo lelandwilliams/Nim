@@ -242,7 +242,6 @@ class NimBase(NimTuples):
 
         # And add trailing 0's to shorthand codes
         while len(self.rulecode) < self.max_dimensions + 2:
-            q
             self.rulecode += "0"
 
         self.moves = list()
