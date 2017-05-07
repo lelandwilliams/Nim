@@ -17,6 +17,14 @@ class TestNim(unittest.TestCase):
         self.assertEqual(t, (None,0,0,1,0))
         self.assertEqual(nim.carry_dim, 3)
 
+    def test_zeroTupleBelow(self):
+        nim = Nim()
+        t = (None,1,2,3,4)
+        self.assertEqual(nim.zeroTupleBelow(t,1), (None,1,2,3,4))
+        self.assertEqual(nim.zeroTupleBelow(t,2), (None,0,2,3,4))
+        self.assertEqual(nim.zeroTupleBelow(t,3), (None,0,0,3,4))
+        self.assertEqual(nim.zeroTupleBelow(t,4), (None,0,0,0,4))
+
     def test_zeroTupleAbove(self):
         nim = Nim()
         t = (None,1,2,3,4)
