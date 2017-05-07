@@ -171,7 +171,7 @@ class NimBase(NimTuples):
         """
 
         # First check input parameters, and set them if they are set to default
-        if not check_t:
+        if check_t is None:
             check_t = self.rectangle
         if not dim:
             dim = 0
