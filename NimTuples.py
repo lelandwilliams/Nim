@@ -103,15 +103,17 @@ class NimTuples:
         # or the Tuple is maxed out, in which cases
         # the origin is returned.
         #
-        # In either case, the class member self.carry_dimension
-        # is set, either to 0 if no carry was performed, or
-        # to the highest dimenstion that was carried into.
+        # Side Effects: self.carry_dimension is set to 0 if no carry was performed, 
+        #   or to the highest dimenstion that was carried into.
+        #   self.inc_dim is set to the increment dimension every time an incrmentation
+        #   occurs.
 
         self.carry_dim = carry
         boundary = self.rectangle if boundary == None else boundary
 
         if (dim < len(t)) and (t[dim] != None) :
             t = self.incrementTuple(t, dim)
+            self.inc_dim = dim
             # if position is beyond maximum value
             if ((not exclusive and (t[dim] > boundary[dim])) or 
                     (exclusive and (t[dim] >= boundary[dim]))): 
@@ -139,19 +141,34 @@ class NimTuples:
         assert type(new_t) == type(tuple())
         return new_t
 
-    def zeroHigherDimensions(self,t,dim):
+    def zeroTupleBelow(self, t, dim):
+
+        # Inputs: t, a tuple
+        #         dim, the dimension below which the tuple should be zeroed
+        # Output: a new tuple identical to the old, 
+        #   except that the first (d -1) dimensions have been 
+        #   set to zero.
+
+        new_t = tuple()
+        for i in range(1,len(t)):
+            if i < dim:
+                new_t += 0,
+            else:
+                new_t += t[i],
+        return new_t
+
+    def zeroTupleAbove(self, t, dim):
 
         # Inputs: t, a tuple
         #         dim, the dimension above which the tuple should be zeroed
-        # output: a new tuple identical to the old, except that it has been zeroed.
+        # Output: a new tuple identical to the old, 
+        #   except that the first (d -1) dimensions have been 
+        #   set to zero.
 
         new_t = tuple()
-        for i in range(len(t)):
-            if i <= dim:
-                new_t += t[i],
-            else:
+        for i in range(1,len(t)):
+            if i > dim:
                 new_t += 0,
+            else:
+                new_t += t[i],
         return new_t
-
-
-
