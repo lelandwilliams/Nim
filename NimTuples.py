@@ -88,7 +88,7 @@ class NimTuples:
         return new_t
 
 
-    def incrementTupleWithCarry(self, t, dim = 1, exclusive = False, boundary = None,
+    def OldincrementTupleWithCarry(self, t, dim = 1, exclusive = False, boundary = None,
             carry = 0):
         
         # Input: t, a tuple
@@ -125,6 +125,23 @@ class NimTuples:
             except: self.origen = (None,)
             return self.origen
 
+    def incrementTupleWithCarry(self, tup, d = 1):
+        t = tup
+        dim = d
+        carry_flag = True
+
+        while (dim < len(t)) and carry_flag is True:
+            self.inc_dim = dim
+            t = self.incrementTuple(t, dim)
+            if t[dim] > self.rectangle[dim]:
+                t = self.setTuplePositionXtoY(t, dim, 0)
+                dim += 1
+            else:
+                carry_flag = False
+        return t
+
+
+
     def setTuplePositionXtoY(self, t, x, y):
         
         # Inputs: a tuple t, the desired position x, and the new value y
@@ -149,12 +166,14 @@ class NimTuples:
         #   except that the first (d -1) dimensions have been 
         #   set to zero.
 
-        new_t = tuple()
-        for i in range(1,len(t)):
+        new_t = t
+        i= 1
+        for entry in t[1:]:
             if i < dim:
-                new_t += 0,
+                new_t = self.setTuplePositionXtoY(new_t,i,0)
             else:
-                new_t += t[i],
+                new_t = self.setTuplePositionXtoY(new_t,i,t[i])
+            i += 1
         return new_t
 
     def zeroTupleAbove(self, t, dim):
@@ -165,10 +184,12 @@ class NimTuples:
         #   except that the first (d -1) dimensions have been 
         #   set to zero.
 
-        new_t = tuple()
-        for i in range(1,len(t)):
-            if i > dim:
-                new_t += 0,
+        new_t = t
+        i= 0
+        for entry in t:
+            if (not (t is None)) and i > dim:
+                new_t = self.setTuplePositionXtoY(new_t,i,0)
             else:
-                new_t += t[i],
+                new_t = self.setTuplePositionXtoY(new_t,i,t[i])
+            i += 1
         return new_t
