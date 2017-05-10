@@ -100,6 +100,8 @@ class NimTuples:
                 dim += 1
             else:
                 carry_flag = False
+
+        self.overflow = (dim == len(t))
         return t
 
     def incrementTupleWithCarryExclusive(self, tup, d = 1):
@@ -115,6 +117,8 @@ class NimTuples:
                 dim += 1
             else:
                 carry_flag = False
+
+        self.overflow = (dim == len(t))
         return t
 
 
