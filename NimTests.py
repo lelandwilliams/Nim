@@ -6,16 +6,17 @@ class TestNim(unittest.TestCase):
 
     def test_incrementTupleWithCarry(self):
         nim = Nim(4)
-        nim.rectangle = (None,0,0,0,0)
-        nim.incrementTupleWithCarry((None,1,1,1,1))
-        self.assertTrue(nim.carry_dim)
         nim.rectangle = (None,2,2,2,2)
         t = nim.incrementTupleWithCarry(nim.origen)
         self.assertEqual(t, (None,1,0,0,0))
-        self.assertFalse(nim.carry_dim)
+        self.assertEqual(nim.inc_dim, 1)
+        t = nim.incrementTupleWithCarry((None,2,1,0,0))
+        self.assertEqual(t, (None,0,2,0,0))
+        self.assertEqual(nim.inc_dim, 2)
         t = nim.incrementTupleWithCarry((None,2,2,0,0))
         self.assertEqual(t, (None,0,0,1,0))
-        self.assertEqual(nim.carry_dim, 3)
+        self.assertEqual(nim.inc_dim, 3)
+        
 
     def test_zeroTupleBelow(self):
         nim = Nim()
@@ -76,7 +77,7 @@ class TestNim(unittest.TestCase):
         self.assertEqual(nim.rectangle, (None,2))
         self.assertEqual(nim.preperiod, (None,0))
 
-    def xtest_example2(self):
+    def test_example2(self):
         nim = Nim(2)
         nim.run()
         self.assertEqual(len(nim.p_positions()), 1)
@@ -84,7 +85,7 @@ class TestNim(unittest.TestCase):
         self.assertEqual(nim.rectangle, (None,2,2))
         self.assertEqual(nim.preperiod, (None,0,0))
 
-    def xtest_example3(self):
+    def test_example3(self):
         nim = Nim(2,None, PlayCondition.Misere)
         nim.run()
         self.assertEqual(len(nim.p_positions()), 2)
@@ -93,7 +94,7 @@ class TestNim(unittest.TestCase):
         self.assertEqual(nim.rectangle, (None,2,3))
         self.assertEqual(nim.preperiod, (None,0,1))
 
-    def xtest_example3_5(self):
+    def test_example3_5(self):
         nim = Nim(3, None, PlayCondition.Misere)
         nim.run()
         self.assertEqual(len(nim.p_positions()), 5)
@@ -106,7 +107,7 @@ class TestNim(unittest.TestCase):
         self.assertEqual(nim.preperiod, (None,0,1,1))
         self.assertEqual(nim.period(), (None,2,2,2))
 
-    def xtest_example4(self):
+    def test_example4(self):
         nim = Nim(4, 0.3122, PlayCondition.Misere)
         nim.run()
         self.assertEqual(len(nim.p_positions()), 8)
@@ -122,7 +123,7 @@ class TestNim(unittest.TestCase):
         self.assertEqual(nim.preperiod, (None,0,2,1,0))
         self.assertEqual(nim.period(), (None,2,2,1,2))
 
-    def xtest_example5(self):
+    def test_example5(self):
         nim = Nim(6, 0.3122, PlayCondition.Misere)
         nim.run()
         self.assertEqual(nim.rectangle, (None,2,5,2,4,4,4))
