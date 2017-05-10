@@ -37,43 +37,81 @@ class NimBase(NimTuples):
         self.rectangle = () # The shape of the rectangle needed to work out the period
         self.normal_play = True
         self.print_report_when_done = False
+        self.verifyFailures = list()
 
         if run:
             self.run()
     
     def run(self):
-        self.explore(1)
-        
-    def explore(self, dim):
-        if dim == 0:
-            return self.explore(1)
-        if dim > self.max_dimensions:
-            return True
+        self.explore()
 
-        # Zero out later dimensions of preperiod, rectangle
-        self.preperiod = self.zeroHigherDimensions(self.preperiod, dim)
-        self.rectangle = self.zeroHigherDimensions(self.rectangle, dim)
+    def compare(self, p, r, d):
+        self.inc_dim = 0
+        while (self.inc_dim < d):
+            if self.getOutcome(p) != self.getOutcome(r):
+                return False
+            else:
+                self.incrementTupleWithCarry(p)
+                self.incrementTupleWithCarry(r)
+        return True
 
-        # increment rectangle in present dimension
-        self.rectangle = self.incrementTuple(self.rectangle, dim)
+    def xfindMatch(self, d):
+        dim = d
+        for i in range(self.preperiod[dim], self.rectangle[dim] + 1):
+            rec_check = self.zeroTupleBelow(self.rectangle, dim)
+            pre_check = self.setTuplePositionXtoY(rec_check, dim, self.preperiod[dim])
+            self.inc_dim = 0
+            while ((self.getOutcome(rec_check) == self.getOutcome(pre_check))
+                    and (self.inc_dim < dim)):
+                rec_check = self.incrementTupleWithCarry(rec_check)
+                pre_check = self.incrementTupleWithCarry(pre_check)
+            if (self.inc_dim < dim):
+                return i
+        return -1
 
-        # make sure rectangle has not overrun preset maximum in the current dimension
-        if self.max_depth > 0 and self.rectangle[dim] > self.max_depth:
-            print("\nError: self.rectangle in dimension {} has exceeded maximum depth of {}".format( dim, self.max_depth))
-            return False
-
-        # verify preperiod and period still holds for new value of rectangle
-        failure_dimension = self.verify(dim) 
-        if failure_dimension:
-            return self.explore(failure_dimension)
-
-        # see if new value of rectangle matches an earlier value
+    def findMatch(self, d):
+        dim = d
         for i in range(self.preperiod[dim], self.rectangle[dim]):
-            t = self.setTuplePositionXtoY(self.rectangle, dim, i)
-            if self.getSlice(dim, t) == self.getSlice(dim, self.rectangle):
-                self.updatePreperiod(dim, i)
-                return self.explore(dim + 1)
-        return self.explore(dim)
+            rec_check = self.zeroTupleBelow(self.rectangle, dim)
+            pre_check = self.setTuplePositionXtoY(rec_check, dim, i)
+            self.inc_dim = 0
+            match = True
+            while self.inc_dim < dim and match is True:
+                if self.getOutcome(rec_check) != self.getOutcome(pre_check):
+                    match = False
+                else:
+                    rec_check = self.incrementTupleWithCarry(rec_check)
+                    pre_check = self.incrementTupleWithCarry(pre_check)
+            if match:
+                return i
+        return -1
+        
+    def explore(self):
+        explore_dim = 1
+        while explore_dim <= self.max_dimensions:
+            # Zero out later dimensions of preperiod, rectangle
+            self.preperiod = self.zeroTupleAbove(self.preperiod, explore_dim)
+            self.rectangle = self.zeroTupleAbove(self.rectangle, explore_dim)
+
+            self.rectangle = self.incrementTuple(self.rectangle, explore_dim)
+
+            # make sure rectangle has not overrun preset maximum in the current dimension
+            if self.max_depth > 0 and self.rectangle[explore_dim] > self.max_depth:
+                print("\nError: self.rectangle in dimension {}".format(explore_dim))
+                print("has exceeded maximum depth of {}".format(self.max_depth))
+                return False
+
+            # check if preperiod and period still holds for new value of rectangle
+            failure_dimension = self.newVerify(explore_dim) 
+            if failure_dimension > -1:
+                # if not, explore at dimension where things fail
+                explore_dim = failure_dimension
+            else:
+                match_pos = self.findMatch(explore_dim)
+                if match_pos > -1:
+                    self.updatePreperiod(explore_dim, match_pos)
+                    explore_dim += 1
+        return True
 
     def getOutcome(self,t):
         
@@ -101,8 +139,8 @@ class NimBase(NimTuples):
         # Input: dimension, the dimension of the slice we want
         #        cur_tuple, the tuple we are pulling a slice out of. Defaults to rectangle
 
-        assert cur_tuple == None or type(cur_tuple) == type(tuple())
-        cur_tuple = self.rectangle if cur_tuple == None else cur_tuple
+        if cur_tuple is None:
+            cur_tuple = self.rectangle 
         assert type(cur_tuple) == type(tuple())
 
         # set lower dimensions of cur_tuple to 0
@@ -193,22 +231,49 @@ class NimBase(NimTuples):
             return dim -1
         
         return 0
+    
+    def newVerify(self, d = None):
+
+        explore_dim = d
+        if explore_dim  is None:
+            explore_dim  = 1
+            for i in range(2, self.max_dimensions + 1):
+                if self.rectangle[i] > 0:
+                    explore_dim  = i
+
+        for verify_dim in range(2, explore_dim):
+            check_tuple = self.zeroTupleBelow(self.rectangle, explore_dim)
+            self.inc_dim = 0
+            pre_check = self.setTuplePositionXtoY(check_tuple, verify_dim, self.preperiod[verify_dim])
+            rec_check = self.setTuplePositionXtoY(check_tuple, verify_dim, self.rectangle[verify_dim])
+            while self.inc_dim < explore_dim:
+                if self.getOutcome(pre_check) != self.getOutcome(rec_check):
+                    self.verifyFailures.append(self.rectangle)
+                    return verify_dim
+                check_tuple = self.incrementTupleWithCarry(check_tuple, verify_dim)
+
+        return -1
+
+
+
+
+        
 
     #
     # below are setter functions
     #
 
-    def setDimensions(self, dimensions):
-        self.max_dimensions = dimensions
-        self.origen = self.fillTuple((None,))
-        self.rectangle = self.origen
-        self.preperiod = self.origen
-        self.moves = self.setStandardMoves()
-        self.outcomes = {}
-        if self.normal_play:
-            self.outcomes[self.origen] = 'P'
-        else:
-            self.outcomes[self.origen] = 'N'
+#   def setDimensions(self, dimensions):
+#       self.max_dimensions = dimensions
+#       self.origen = self.fillTuple((None,))
+#       self.rectangle = self.origen
+#       self.preperiod = self.origen
+#       self.moves = self.setStandardMoves()
+#       self.outcomes = {}
+#       if self.normal_play:
+#           self.outcomes[self.origen] = 'P'
+#       else:
+#           self.outcomes[self.origen] = 'N'
 
     def setNormalPlay(self):
         self.normal_play = True
