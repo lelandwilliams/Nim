@@ -129,7 +129,7 @@ class NimReport(NimBase):
 
                         for k in range(report_boundary[1]):
                                 sublines[j] += "{:<2}".format(self.getOutcome(cur_t))
-                                cur_t = self.incrementTupleWithCarry(cur_t, 1, True)
+                                cur_t = self.incrementTupleWithCarryExclusive(cur_t, 1)
                                 # see note under while statement for 
                                 # explanation of use of cur_t
                     
