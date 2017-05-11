@@ -120,34 +120,6 @@ class NimBase(NimTuples):
         self.outcomes[t] = 'P'
         return 'P'
 
-    def getSlice(self, dimension, cur_tuple = None):
-
-        # Input: dimension, the dimension of the slice we want
-        #        cur_tuple, the tuple we are pulling a slice out of. Defaults to rectangle
-
-        if cur_tuple is None:
-            cur_tuple = self.rectangle 
-        assert type(cur_tuple) == type(tuple())
-
-        # set lower dimensions of cur_tuple to 0
-        for i in range(1, dimension):
-            cur_tuple = self.setTuplePositionXtoY(cur_tuple, i, 0)
-
-        # remember the value of the cur_tuple in dimension. 
-        cur_dimension_value = cur_tuple[dimension]
-
-        # prevent infinite loop that happens when testing lowest dimension
-        if dimension == 1:
-            return self.getOutcome(cur_tuple)
-
-        s = str()
-
-        while(cur_tuple[dimension] == cur_dimension_value):
-            s += (self.getOutcome(cur_tuple))
-            cur_tuple = self.incrementTupleWithCarry(cur_tuple)
-
-        return s
-
     def offthegrid(self,t):
  
         # Input: t, a tuple
