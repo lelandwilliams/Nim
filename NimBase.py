@@ -55,20 +55,6 @@ class NimBase(NimTuples):
                 self.incrementTupleWithCarry(r)
         return True
 
-    def xfindMatch(self, d):
-        dim = d
-        for i in range(self.preperiod[dim], self.rectangle[dim] + 1):
-            rec_check = self.zeroTupleBelow(self.rectangle, dim)
-            pre_check = self.setTuplePositionXtoY(rec_check, dim, self.preperiod[dim])
-            self.inc_dim = 0
-            while ((self.getOutcome(rec_check) == self.getOutcome(pre_check))
-                    and (self.inc_dim < dim)):
-                rec_check = self.incrementTupleWithCarry(rec_check)
-                pre_check = self.incrementTupleWithCarry(pre_check)
-            if (self.inc_dim < dim):
-                return i
-        return -1
-
     def findMatch(self, d):
         dim = d
         for i in range(self.preperiod[dim], self.rectangle[dim]):
