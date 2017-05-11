@@ -165,19 +165,6 @@ class NimBase(NimTuples):
 
         return -1
 
-
-
-
-        
-
-    #
-    # below are setter functions
-    #
-
-    def setNormalPlay(self):
-        self.normal_play = True
-        self.outcomes[self.origen] = 'P'
-
     def setMoves(self, code=None):
         
         #Input: a valid quartenary code string
@@ -220,11 +207,6 @@ class NimBase(NimTuples):
                     new_move = self.setTuplePositionXtoY(new_move, j-cur_position, 1)
                     self.moves.append(new_move)
             cur_position += 1
-
-                
-    def setMiserePlay(self):
-        self.normal_play = False
-        self.outcomes[self.origen] = 'N'
 
     def updatePreperiod(self, cur_dimension, match_value):
         self.preperiod = self.setTuplePositionXtoY(self.preperiod, cur_dimension, match_value)
