@@ -186,54 +186,7 @@ class NimBase(NimTuples):
                         (self.rectangle[i] - self.preperiod[i]))
         return t
 
-    def xverify(self, dim=None, check_t = None):
-        """ 
-        This function should be called primarily by explore(), in the case
-        that explore increases the value of a certain dimension. While explore
-        looks forward to find new values and check them for periodicity, 
-        This function looks backwards to see that the currently determined
-        periods still work.
-
-        This function is recurvise, so that it looks over the entire slice of 
-        the new dimension to see if the period and preperiod holds.
-
-         Input: the dimensions of the new value for which we we want to make 
-            priorly determined periods still hold.
-          explore() calls this without parameters, in which case this
-            function sets it to the last non-zero entry in self.rectangle
-
-          check_t, the current check_tuple. It defaults to self.rectrnagle
-            of various dimensions we should look to verify matches
-         Output: 0 if everything is hunky-dory, else the dimension that 
-           don't fly
-        """
-
-        # First check input parameters, and set them if they are set to default
-        if check_t is None:
-            check_t = self.rectangle
-        if not dim:
-            dim = 0
-            for i in range(1,len(check_t)+1):
-                if check_t(i) != 0 :
-                    dim = i
-
-        # base_case for recursion:
-        if dim ==0:
-            return 0
-
-        # Now to check dimensions
-        for i in range(check_t[dim -1]):
-            test_tuple = self.setTuplePositionXtoY(check_t, dim-1, i)
-            if self.verify(dim -1, test_tuple):
-                return self.verify(dim -1, test_tuple)
-        test_tuple = self.setTuplePositionXtoY(check_t, dim-1, self.preperiod[dim-1])
-        if self.getSlice(dim -1, test_tuple) != self.getSlice(dim -1, check_t):
-            return dim -1
-        
-        return 0
-    
     def verify(self, d = None):
-
         explore_dim = d
         if explore_dim  is None:
             explore_dim  = 1
