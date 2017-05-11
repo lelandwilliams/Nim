@@ -174,18 +174,6 @@ class NimBase(NimTuples):
     # below are setter functions
     #
 
-#   def setDimensions(self, dimensions):
-#       self.max_dimensions = dimensions
-#       self.origen = self.fillTuple((None,))
-#       self.rectangle = self.origen
-#       self.preperiod = self.origen
-#       self.moves = self.setStandardMoves()
-#       self.outcomes = {}
-#       if self.normal_play:
-#           self.outcomes[self.origen] = 'P'
-#       else:
-#           self.outcomes[self.origen] = 'N'
-
     def setNormalPlay(self):
         self.normal_play = True
         self.outcomes[self.origen] = 'P'
