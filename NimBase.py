@@ -102,7 +102,7 @@ class NimBase(NimTuples):
                 return False
 
             # check if preperiod and period still holds for new value of rectangle
-            failure_dimension = self.newVerify(explore_dim) 
+            failure_dimension = self.verify(explore_dim) 
             if failure_dimension > -1:
                 # if not, explore at dimension where things fail
                 explore_dim = failure_dimension
@@ -186,7 +186,7 @@ class NimBase(NimTuples):
                         (self.rectangle[i] - self.preperiod[i]))
         return t
 
-    def verify(self, dim=None, check_t = None):
+    def xverify(self, dim=None, check_t = None):
         """ 
         This function should be called primarily by explore(), in the case
         that explore increases the value of a certain dimension. While explore
@@ -232,7 +232,7 @@ class NimBase(NimTuples):
         
         return 0
     
-    def newVerify(self, d = None):
+    def verify(self, d = None):
 
         explore_dim = d
         if explore_dim  is None:
