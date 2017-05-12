@@ -1,4 +1,8 @@
 Go through NimTuples and add type() tests
 Add additional unit tests.
-Add additional ducmentation.
-Add an interactive front end script.
+Add additional docmentation.
+Make printGrid() handle 2 dimensions 
+Add record of dimension of failure to verifyFailures
+print out p_positions
+
+
