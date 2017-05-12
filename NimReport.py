@@ -75,8 +75,8 @@ class NimReport(NimBase):
             # If there are 3 or less dimensions being explored
             # Print a Header saying what the upper dimensions are.
             # and include the 3rd dimension in the table
-            self.carry_dim = 0
-            while(cur_t != self.origen or self.carry_dim == 0):
+            self.overflow = False
+            while(self.overflow is False):
                 # the above tests to see of cur_t has 'wrapped around'
                 # in which case we should quit
 
@@ -129,7 +129,7 @@ class NimReport(NimBase):
 
                         for k in range(report_boundary[1]):
                                 sublines[j] += "{:<2}".format(self.getOutcome(cur_t))
-                                cur_t = self.incrementTupleWithCarry(cur_t, 1, True)
+                                cur_t = self.incrementTupleWithCarryExclusive(cur_t, 1)
                                 # see note under while statement for 
                                 # explanation of use of cur_t
                     

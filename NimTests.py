@@ -6,16 +6,33 @@ class TestNim(unittest.TestCase):
 
     def test_incrementTupleWithCarry(self):
         nim = Nim(4)
-        nim.rectangle = (None,0,0,0,0)
-        nim.incrementTupleWithCarry((None,1,1,1,1))
-        self.assertTrue(nim.carry_dim)
         nim.rectangle = (None,2,2,2,2)
         t = nim.incrementTupleWithCarry(nim.origen)
         self.assertEqual(t, (None,1,0,0,0))
-        self.assertFalse(nim.carry_dim)
+        self.assertEqual(nim.inc_dim, 1)
+        t = nim.incrementTupleWithCarry((None,2,1,0,0))
+        self.assertEqual(t, (None,0,2,0,0))
+        self.assertEqual(nim.inc_dim, 2)
         t = nim.incrementTupleWithCarry((None,2,2,0,0))
         self.assertEqual(t, (None,0,0,1,0))
-        self.assertEqual(nim.carry_dim, 3)
+        self.assertEqual(nim.inc_dim, 3)
+        
+
+    def test_zeroTupleBelow(self):
+        nim = Nim()
+        t = (None,1,2,3,4)
+        self.assertEqual(nim.zeroTupleBelow(t,1), (None,1,2,3,4))
+        self.assertEqual(nim.zeroTupleBelow(t,2), (None,0,2,3,4))
+        self.assertEqual(nim.zeroTupleBelow(t,3), (None,0,0,3,4))
+        self.assertEqual(nim.zeroTupleBelow(t,4), (None,0,0,0,4))
+
+    def test_zeroTupleAbove(self):
+        nim = Nim()
+        t = (None,1,2,3,4)
+        self.assertEqual(nim.zeroTupleAbove(t,1), (None,1,0,0,0))
+        self.assertEqual(nim.zeroTupleAbove(t,2), (None,1,2,0,0))
+        self.assertEqual(nim.zeroTupleAbove(t,3), (None,1,2,3,0))
+        self.assertEqual(nim.zeroTupleAbove(t,4), (None,1,2,3,4))
 
     def test_setMoves(self):
         nim = Nim(2)

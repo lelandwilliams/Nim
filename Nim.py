@@ -21,8 +21,8 @@ class Nim(NimReport):
 
         # Test for non-full parameters, since we cant run without them
         # Todo: Enter an interactive mode
-        if dimensions == None:
-            return True
+        if dimensions is None:
+            return False
         self.setDimensions(dimensions)
 
 
