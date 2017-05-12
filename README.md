@@ -8,4 +8,4 @@ that implements the algorithm by [Mike Weimerskich](http://www-users.math.umn.ed
 as described in [his paper](http://library.msri.org/books/Book63/files/131106-Weimerskirch.pdf)
 
 ## How to use the program
-TO use the program interactively, open a terminal, enter the directory where the code is and type `./Nim`
+To use the program interactively, open a terminal, enter the directory where the code is and type `./Nim`
