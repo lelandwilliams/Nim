@@ -7,6 +7,10 @@ This program was written by [Leland Williams](https://lelandwilliams.github.io/)
 It implements the algorithm by [Mike Weimerskich](http://www-users.math.umn.edu/~weim0024/),
 as described in [his paper](http://library.msri.org/books/Book63/files/131106-Weimerskirch.pdf)
 
+## Full Documentation
+
+See the [Wiki](https://github.com/lelandwilliams/Nim/wiki) for full documentation, examples, design notes, and other information.
+
 ## Example Session
 To use the program interactively, open a terminal, enter the directory where the code is and type `./Nim, then simply follow the prompts. Here's an example:
 ```
