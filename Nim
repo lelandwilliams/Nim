@@ -9,7 +9,7 @@ if __name__=='__main__':
         code = input("Quartenary Move Code (or just push enter for regular (1/3) Nim) ")
         play = str()
         while not (play == 'M' or play == 'N'):
-            play = input("(M)isere of (N)ormal Play ")
+            play = input("(M)isere or (N)ormal Play ")
 
         if play == 'M':
             play = PlayCondition.Misere
