@@ -12,7 +12,7 @@ as described in [his paper](http://library.msri.org/books/Book63/files/131106-We
 See the [Wiki](https://github.com/lelandwilliams/Nim/wiki) for full documentation, examples, design notes, and other information.
 
 ## Example Session
-To use the program interactively, open a terminal, enter the directory where the code is and type `./Nim, then simply follow the prompts. Here's an example:
+To use the program interactively, open a terminal, enter the directory where the code is and type `./Nim`, then simply follow the prompts. Here's an example:
 ```
 $ ./Nim 
 Do you wish to run this program interactively (y = yes) y
